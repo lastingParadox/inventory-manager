@@ -1,0 +1,32 @@
+[
+  {
+    "selected": {
+      "name": "",
+      "value": false,
+      "valid": true
+    },
+    "name": "Test Item",
+    "value": 0.01,
+    "serialNumber": "A-090-000-000"
+  },
+  {
+    "selected": {
+      "name": "",
+      "value": false,
+      "valid": true
+    },
+    "name": "Test Item 2",
+    "value": 0.02,
+    "serialNumber": "A-091-000-000"
+  },
+  {
+    "selected": {
+      "name": "",
+      "value": false,
+      "valid": true
+    },
+    "name": "Test Item 3",
+    "value": 0.03,
+    "serialNumber": "A-092-000-000"
+  }
+]

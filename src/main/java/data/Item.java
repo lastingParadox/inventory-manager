@@ -11,15 +11,15 @@ import java.math.BigDecimal;
 
 public class Item {
 
-    //Create private SimpleBooleanProperty selected set to false
-    //Create private String name
-    //Create private BigDecimalCurrency value
-    //Create private String serialNumber
+    private SimpleBooleanProperty selected = new SimpleBooleanProperty(false);
+    private String name;
+    private BigDecimal value;
+    private String serialNumber;
 
-    Item(String name, String value, String serialNumber) {
-        //this name = name
-        //this value is a new BigDecimalCurrency with constructor value
-        //this serialNumber = serialNumber
+    public Item(String name, String value, String serialNumber) {
+        this.name = name;
+        this.value = new BigDecimal(value);
+        this.serialNumber = serialNumber;
     }
 
     public SimpleBooleanProperty getSelected() {
@@ -33,18 +33,15 @@ public class Item {
     }
 
     public String getName() {
-        //return name
-        return null;
+        return name;
     }
 
     public BigDecimal getValue() {
-        //return value.getValue()
-        return null;
+        return value;
     }
 
     public String getSerial() {
-        //return serial
-        return null;
+        return serialNumber;
     }
 
     public void setSelected(boolean selected) {

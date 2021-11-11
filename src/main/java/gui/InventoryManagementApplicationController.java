@@ -5,12 +5,16 @@
 
 package gui;
 
-import data.BigDecimalCurrency;
 import data.Item;
+import data.ItemList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+
+import java.io.IOException;
+import java.math.BigDecimal;
 
 public class InventoryManagementApplicationController {
 
@@ -36,112 +40,125 @@ public class InventoryManagementApplicationController {
 
     @FXML private Label userLabel;
 
-    @FXML private TableColumn<Item, BigDecimalCurrency> valueColumn;
+    @FXML private TableColumn<Item, BigDecimal> valueColumn;
 
     private final CheckBox selectAllBox = new CheckBox();
 
-    //Create new private ItemList inventory
-    //Create new private FilteredList of Items "filteredList"
+    private ItemList inventory;
+    private FilteredList<Item> filteredList;
 
     @FXML
-    void addItemButtonClicked(ActionEvent event) {
-        //Create new FXMLLoader loader set to "edit.fxml"
-        //Create new Parent root = loader.load()
+    void addItemButtonClicked() throws IOException {
+        /*
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("edit.fxml"));
+        Parent root = loader.load();
 
-        //Stage stage = new Stage()
+        Stage stage = new Stage();
+        EditItemController controller = loader.getController();
+        controller.setItemList(inventory);
 
-        //Create new EditItemController controller = loader.getController()
-        //controller.setItemList(inventory)
-
-        //Scene scene = new Scene(root)
-        //Set the stylesheet of the scene to "styles.css"
-        //Set the title to "Add an Item"
-        //Show stage
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.setTitle("Add an Item");
+        stage.show();*/
     }
 
     @FXML
     void clearItemButtonClicked(ActionEvent event) {
-        //Create new Alert "alert" as a confirmation type
-        //Set the title of the alert to "Clear All Items"
-        //Set the text of the alert to "Are you sure your want ot delete all items?"
-
-        //ButtonType yes is a new ButtonType of "yes"
-        //ButtonType no is a new ButtonType of "cancel_close"
-        //Get the button types and set them all in the alert
-
-        //Show the alert and wait for a button to be pressed
-        //If yes:
-        //inventory.clear()
+        /*
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Clear all items");
+        alert.setContentText("Are you sure you want to delete all items?");
+        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(yes, no);
+        alert.showAndWait().ifPresent(type -> {
+            if (type == yes)
+                inventory.clear();
+        });*/
     }
 
     @FXML
     void clearSearchButtonClicked(ActionEvent event) {
-        //Set searchBox text to ""
+        //searchField.setText("");
     }
 
     @FXML
     void deleteItemButtonClicked(ActionEvent event) {
-        //Create new List of Items "removedItems"
-        //Create new Alert "alert" as a confirmation type
-        //Set the title of the alert to "Remove Selected Items"
+        /*
+        List<Item> removedItems = new ArrayList<>();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Remove Selected Items");
 
-        //Create new StringBuilder "content"
-        //Append "Are you sure you want to remove the following item(s)?%n%n" to content
-        //For each item in inventory:
-            //If selected is set to true:
-                //Add item to removedItems
-                //Append "'item.getName'%n" to content
+        StringBuilder content = new StringBuilder();
+        content.append(String.format("Are you sure you want to remove the following item(s)?%n"));
 
-        //Set the text of the alert to the string value of content
+        for(Item item : inventory.getList()) {
+            if (item.getSelectedValue()) {
+                removedItems.add(item);
+                content.append(String.format("%s%n", item.getName()));
+            }
+        }
+        if (String.valueOf(content).equals(String.format("Are you sure you want to remove the following item(s)?%n"))) {
+            return;
+        }
 
-        //ButtonType yes is a new ButtonType of "yes"
-        //ButtonType no is a new ButtonType of "cancel_close"
-        //Get the button types and set them all in the alert
+        alert.setContentText(String.valueOf(content));
 
-        //Show the alert and wait for a button to be pressed:
-        //If yes:
-            //inventory.removeItems(removedItems)
+        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(yes, no);
+        alert.showAndWait().ifPresent(type -> {
+            if (type == yes)
+                inventory.removeItems(removedItems);
+        });*/
     }
 
     @FXML
-    void editItemButtonClicked(ActionEvent event) {
-        //Create new FXMLLoader loader set to "edit.fxml"
-        //Create new Parent root = loader.load()
+    void editItemButtonClicked(ActionEvent event) throws IOException {
+        /*
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("edit.fxml"));
+        Parent root = loader.load();
 
-        //Stage stage = new Stage()
+        Stage stage = new Stage();
+        EditItemController controller = loader.getController();
+        controller.setItemList(inventory);
+        controller.setItem(itemTable.getSelectionModel().getSelectedItem());
 
-        //Create new EditItemController controller = loader.getController()
-        //controller.setItemList(inventory)
-        //controller.setItem(currently selected item in itemTable)
-
-        //Scene scene = new Scene(root)
-        //Set the stylesheet of the scene to "styles.css"
-        //Set the title to "Edit an Item"
-        //Show stage
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.setTitle(String.format("Edit %s", controller.getItem().getName()));
+        stage.show();*/
     }
 
     @FXML
-    void exportHTMLButtonClicked(ActionEvent event) {
-        //Stage "stage" is the current stage
-        //Create new FileChooser "fileExport" = new FileChooser()"
-        //Set fileExport's title to "Export Inventory"
-        //Set fileExport's initialDirectory to default documents directory ("FileSystemView.getFileSystemView().getDefaultDirectory().getPath()")
-        //Set fileExport's initialFileName as "Inventory.html"
-        //Add the following extensions to fileExport:
-            //"HTML Files", "*.html"
-            //"JSON Files", "*.json"
-            //"Text Files", "*.txt"
+    void exportHTMLButtonClicked() {
+        /*
+        Stage stage = (Stage) itemTable.getScene().getWindow();
+        FileChooser fileExport = new FileChooser();
+        fileExport.setTitle("Export Inventory");
+        fileExport.setInitialDirectory(FileSystemView.getFileSystemView().getDefaultDirectory());
+        fileExport.setInitialFileName("Inventory.html");
+        fileExport.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("HTML Files", "*.html"),
+                new FileChooser.ExtensionFilter("JSON Files", "*.json"),
+                new FileChooser.ExtensionFilter("Text Files", "*.txt")
+        );
 
-        //Create new File "path" set to saveDialog's output (fileExport.showSaveDialog(stage))
-        //If path is null, return
+        File path = fileExport.showSaveDialog(stage);
+        if (path == null)
+            return;
 
-        //Create new fileHandler "fileHandler" with path, inventory
-        //String output = fileHandler.fileExport()
+        FileHandler fileHandler = new FileHandler(path, inventory.getList());
+        String output = fileHandler.fileExport();
 
-        //If output is not null:
-            //Create new alert of type information
-            //Set the content text of alert to "Inventory successfully exported!"
-            //Show the alert
+        if (output != null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Inventory successfully exported!");
+            alert.show();
+        }*/
     }
 
     @FXML

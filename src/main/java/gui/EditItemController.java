@@ -5,6 +5,9 @@
 
 package gui;
 
+import data.Item;
+import data.ItemList;
+import helper.Validator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -34,9 +37,9 @@ public class EditItemController {
     @FXML
     private TextField valueField;
 
-    //Create new private ItemList "inventory"
-    //Create new private Item "item"
-    //Create new private Validator "validator"
+    private ItemList inventory;
+    private Item item;
+    private Validator validator;
 
     @FXML
     void addItemButtonClicked(ActionEvent event) {
@@ -145,6 +148,22 @@ public class EditItemController {
             //Set nameCharCounter's text to "Count: %d characters" with the number of characters being the newField's text length
             //If the text is over 256 characters:
                 //Set nameField's text to a substring from index 0 to 256
+    }
+
+    public ItemList getItemList() {
+        return inventory;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItemList(ItemList items) {
+        inventory = items;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 
 }

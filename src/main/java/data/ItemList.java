@@ -5,6 +5,7 @@
 
 package data;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.function.Predicate;
 
 public class ItemList {
 
-    //Create private final ObservableList of Items "items"
+    private final ObservableList<Item> items = FXCollections.observableArrayList();
 
     public void addItem(String name, String value, String serial) {
         //Item item is a new item with name, value, serial
@@ -63,9 +64,8 @@ public class ItemList {
 
     //Getter and Setter
 
-    public ObservableList<Item> getList() {
-        //Return items
-        return null;
+    public List<Item> getList() {
+        return items;
     }
 
     public void setList(List<Item> newList) {

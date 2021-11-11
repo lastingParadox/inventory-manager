@@ -1,26 +1,32 @@
 package helper;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import data.Item;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 
 public class FileHandler {
 
-    //Create new private File path
-    //Create new private List of Items list
+    private File path;
+    private List<Item> list;
 
-    FileHandler(File path) {
-        //this path = path
+    public FileHandler(File path) {
+        this.path = path;
     }
 
-    FileHandler(File path, List<Item> list) {
-        //this path = path
-        //this list = list
+    public FileHandler(File path, List<Item> list) {
+        this.path = path;
+        this.list = list;
     }
 
-    FileHandler() {
+    public FileHandler() {
         //Null constructor for testing
     }
 
@@ -91,69 +97,80 @@ public class FileHandler {
         return Collections.emptyList();
     }
 
-    public String fileExport() {
-        //Create String "fileType" = Files.probeContentType(path)
-        //String output
+    public String fileExport()  {
+        String fileType = "";
+        try {
+            fileType = Files.probeContentType(Paths.get(path.getPath()));
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
 
-        //If fileType equals "text/plain":
-            //output = exportText()
-        //Else If fileType equals "text/html":
-            //output = exportHTML()
-        //Else If fileType equals "application/json"
-            //output = exportJSON()
-
-        //return output
-        return null;
+        return switch (fileType) {
+            case "text/plain" -> exportText();
+            case "text/html" -> exportHTML();
+            case "application/json" -> exportJSON();
+            default -> null;
+        };
     }
 
     public String exportText() {
-        //StringBuilder output is a new StringBuilder
-        //Try to create a FileWriter "writer" to the path
-            //Append "Name%tValue%tSerial Number%n" to output
-            //For each item in list:
-                //Append "'item.getName()'%t'item.getValue()'%t'item.getSerial()'%n" to output
-            //Write the string value of output with writer
-        //Catch an IOException:
-            //Return null
-        //return String value of output
-        return null;
+        StringBuilder output = new StringBuilder();
+        try (FileWriter writer = new FileWriter(path)) {
+            output.append(String.format("Name\tValue\tSerial Number%n"));
+            for (Item item : list) {
+                output.append(String.format("%s\t%s\t%s%n", item.getName(), item.getValue().toString(), item.getSerial()));
+            }
+            writer.write(String.valueOf(output));
+        } catch (IOException e) {
+            return null;
+        }
+        return String.valueOf(output);
     }
 
     public String exportHTML() {
-        //StringBuilder output is a new StringBuilder
-        //Try to create a FileWriter "writer" to the path
-            //Append "<!DOCTYPE html>%n%t<html>%n%t%t<head>%n%t%t%t<title>Inventory Table</title>%n%t%t</head>%n" to output
-            //Append "%t%t<body>%n%t%t%t<table>%n%n%t%t%t%t%t%n" to output
-            //Append "%t%t%t%t%t<th>Name</th>%n%t%t%t%t%t<th>Value</th>%n%t%t%t%t%t<th>Serial Number</th>%n%t%t%t%t%t</tr>%n" to output
-            //For each item in list:
-                //Append "%t%t%t%t%t<tr>%n" to output
-                //Append "%t%t%t%t%t%t<td>'item.getName()'</td>%n" to output
-                //Append "%t%t%t%t%t%t<td>'item.getValue()'</td>%n" to output
-                //Append "%t%t%t%t%t%t<td>'item.getSerial()'</td>%n" to output
-            //Append "%t%t%t</table>%n" to output
-            //Append "%t%t</body>%n" to output
-            //Append "%t</html>" to output
+        StringBuilder output = new StringBuilder();
+        try (FileWriter writer = new FileWriter(path)) {
+            output.append(String.format("<!DOCTYPE html>%n%4s<html>%n%8s<head>%n%12s<title>Inventory Table</title>%n%8s</head>%n","","","",""));
+            output.append(String.format("%8s<body>%n%12s<table>%n","",""));
+            output.append(String.format("%16s<tr>%n%20s<th>Name</th>%n%20s<th>Value</th>%n%20s<th>Serial Number</th>%n%16s</tr>%n","","","","",""));
+            for (Item item : list) {
+                output.append(String.format("%16s<tr>%n%20s<td>%s</td>%n", "","",item.getName()));
+                output.append(String.format("%20s<td>%s</td>%n","",item.getValue()));
+                output.append(String.format("%20s<td>%s</td>%n%16s<tr>%n","",item.getSerial(),""));
+            }
+            output.append(String.format("%12s</table>%n%8s</body>%n%4s</html>","","",""));
 
-            //Write String value of output to path using writer
+            writer.write(String.valueOf(output));
+        } catch (IOException e) {
+            return null;
+        }
 
-        //Catch IOException:
-            //return null
-
-        //return String value of output
-        return null;
+        return String.valueOf(output);
     }
 
     public String exportJSON() {
-        //Create String output
-        //Try to create a FileWriter "writer" to the path
-            //Create new Gson "gson"
-            //output = gson.toJson(list)
-            //Write output to path using writer
-        //Catch IOException:
-            //return null
+        String output;
 
-        //return output
-        return null;
+        for (Item item : list) {
+            item.setSelected(false);
+        }
+
+        try (FileWriter writer = new FileWriter(path)) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            output = gson.toJson(list);
+            writer.write(output);
+        } catch (IOException e) {
+            return null;
+        }
+
+        return output;
     }
 
+    public void setPath(File path) {
+        this.path = path;
+    }
+
+    public void setList(List<Item> list) {
+        this.list = list;
+    }
 }

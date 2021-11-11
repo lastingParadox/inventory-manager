@@ -5,8 +5,6 @@
 
 package helper;
 
-import java.math.BigDecimal;
-
 public class Validator {
 
     public String verifyName(String name) {
