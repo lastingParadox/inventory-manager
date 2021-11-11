@@ -9,9 +9,9 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.EditItemController">
    <top>
@@ -48,7 +48,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="nameField" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="250.0" />
+                  <TextField fx:id="nameField" maxWidth="1.7976931348623157E308" onAction="#onNameFieldFill" prefWidth="252.0" />
                </children>
                <VBox.margin>
                   <Insets left="5.0" right="5.0" top="20.0" />
@@ -63,14 +63,22 @@
                   <Label fx:id="nameCharCounter" text="Count: 0 Characters" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="575.0" spacing="10.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="575.0">
                <children>
-                  <Label text="Item Value:">
+                  <Label prefHeight="17.0" prefWidth="77.0" text="Item Value:">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="valueField" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="250.0" />
+                  <Label text="\$">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="valueField" maxWidth="1.7976931348623157E308" onAction="#onValueFieldFill" prefHeight="25.0" prefWidth="246.0" />
                </children>
                <VBox.margin>
                   <Insets left="5.0" top="5.0" />
@@ -94,7 +102,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="serialField" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="200.0" />
+                  <TextField fx:id="serialField" maxWidth="1.7976931348623157E308" onAction="#onSerialFieldFill" prefHeight="25.0" prefWidth="199.0" />
                </children>
                <VBox.margin>
                   <Insets left="5.0" right="5.0" top="5.0" />
@@ -110,8 +118,13 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="25.0" prefWidth="338.0" spacing="50.0">
                <children>
-                  <Button fx:id="addItemButton" mnemonicParsing="false" text="Add Item" />
-                  <Button fx:id="deleteItemButton" mnemonicParsing="false" text="Delete Item" />
+                  <StackPane prefHeight="25.0" prefWidth="70.0">
+                     <children>
+                        <Button fx:id="editItemButton" mnemonicParsing="false" onAction="#editItemButtonClicked" text="Edit Item" />
+                        <Button fx:id="addItemButton" mnemonicParsing="false" onAction="#addItemButtonClicked" text="Add Item" visible="false" />
+                     </children>
+                  </StackPane>
+                  <Button mnemonicParsing="false" onAction="#deleteItemButtonClicked" text="Delete Item" />
                </children>
                <VBox.margin>
                   <Insets top="10.0" />

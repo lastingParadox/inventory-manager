@@ -1,0 +1,151 @@
+@startuml
+
+package "data" {
+
+    class BigDecimalCurrency {
+        -BigDecimal value
+
+        +String toString()
+        +BigDecimal getValue()
+        +setValue(String)
+    }
+
+    class Item {
+        -SimpleBooleanProperty selected
+        -String name
+        -BigDecimalCurrency value
+        -String serialNumber
+
+        +SimpleBooleanProperty getSelected()
+        +boolean getSelectedValue()
+        +String getName()
+        +BigDecimal getValue()
+        +String getSerial()
+        +void setSelected(boolean)
+        +void setName(String)
+        +void setValue(BigDecimal)
+        +void setSerial(String)
+    }
+
+    class ItemList {
+        -ObservableList<Item> items
+
+        +void addItem(String, String, String)
+        +void removeItems(List<Item>)
+        +void clear()
+        +void sortByName()
+        +void sortByValue()
+        +void sortBySerial()
+        +boolean searchItem(Item, String)
+        +Predicate<Item> createPredicate(String)
+        +ObservableList<Item> getList()
+        +void setList(List<Item> newList)
+    }
+
+}
+
+package "gui" {
+    class EditItemController {
+        ..@FXML Variables..
+        -Button addItemButton
+        -Button editItemButton
+        -Label nameCharCounter
+        -TextField nameField
+        -TextField serialField
+        -Label titleLabel
+        -TextField valueField
+        ..Other Variables..
+        -ItemList inventory
+        -Item item
+        -Validator validator
+        --
+        ..@FXML Methods..
+        void addItemButtonClicked
+        void deleteItemButtonClicked
+        void editItemButtonClicked
+        void onNameFieldFill
+        void onSerialFieldFill
+        void onValueFieldFill
+        +void initialize()
+    }
+
+    class InventoryManagementApplication {
+        +void start(Stage)
+        +{static}void main()
+    }
+
+    class InventoryManagementApplicationController {
+        ..@FXML Variables..
+        -Label dateLabel
+        -VBox homeView
+        -ListView<Item> itemList
+        -TableView<Item> itemTable
+        -VBox itemsView
+        -TableColumn<Item, String> nameColumn
+        -TextField searchField
+        -TableColumn<Item, Boolean> selectedColumn
+        -TableColumn<Item, String> serialColumn
+        -Label timeLabel
+        -Label userLabel
+        -TableColumn<Item, BigDecimalCurrency> valueColumn
+        ..Other Variables..
+        -CheckBox selectAllBox
+        -ItemList inventory
+        -FilteredList<Item> filteredList
+        --
+        ..@FXML Methods..
+        void addItemButtonClicked()
+        void clearItemButtonClicked()
+        void clearSearchButtonClicked
+        void deleteItemButtonClicked()
+        void editItemButtonClicked()
+        void exportHTMLButtonClicked()
+        void exportJSONButtonClicked()
+        void exportTextButtonClicked()
+        void homeButtonClicked()
+        void importButtonClicked()
+        void itemsButtonClicked()
+        void sortNameButtonClicked()
+        void sortSerialButtonClicked()
+        void sortValueButtonClicked()
+        +void initialize()
+        ..Other Methods..
+        +void editItemRowClicked(Item)
+    }
+}
+
+package "helper" {
+    class FileHandler {
+        -File path
+        -List<Item> list
+
+        +List<Item> fileImport()
+        +List<Item> importText()
+        +List<Item> importHTML()
+        +List<Item> importJSON()
+        +String fileExport()
+        +String exportText()
+        +String exportHTML()
+        +String exportJSON()
+    }
+
+    class Validator {
+        +String verifyName(String)
+        +String verifyValue(String)
+        +String
+    }
+}
+
+InventoryManagementApplication -- InventoryManagementApplicationController : < Initializes Main Stage
+InventoryManagementApplicationController -- EditItemController : < Initializes Edit Item Stage
+InventoryManagementApplicationController o-- ItemList
+InventoryManagementApplicationController o-- FileHandler
+EditItemController o-- Validator
+ItemList *-- Item
+Item *-- BigDecimalCurrency
+
+note left of ItemList::items
+    Contains many Items
+end note
+
+@enduml

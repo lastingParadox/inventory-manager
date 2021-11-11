@@ -91,6 +91,7 @@
                                     <Insets top="5.0" />
                                  </VBox.margin>
                               </Button>
+                              <Button mnemonicParsing="false" onAction="#editItemButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Edit Highlighted Item" />
                               <Button mnemonicParsing="false" onAction="#deleteItemButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Delete Selected Items">
                                  <VBox.margin>
                                     <Insets top="5.0" />
