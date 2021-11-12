@@ -1,7 +1,9 @@
 package helper;
 
 import data.Item;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,18 +12,23 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class FileHandlerTest {
 
     FileHandler test = new FileHandler();
 
-    @Test
-    void exportTextTest() {
+    @BeforeAll
+    void createList() {
         List<Item> testList = new ArrayList<>(Arrays.asList(
                 new Item("Test Item", "0.01", "A-090-000-000"),
                 new Item("Test Item 2", "0.02", "A-091-000-000"),
                 new Item("Test Item 3", "0.03", "A-092-000-000")));
 
         test.setList(testList);
+    }
+
+    @Test
+    void exportTextTest() {
         test.setPath(new File("./tests/test1_out.txt"));
 
 
@@ -38,12 +45,6 @@ class FileHandlerTest {
 
     @Test
     void exportHTMLTest() {
-        List<Item> testList = new ArrayList<>(Arrays.asList(
-                new Item("Test Item", "0.01", "A-090-000-000"),
-                new Item("Test Item 2", "0.02", "A-091-000-000"),
-                new Item("Test Item 3", "0.03", "A-092-000-000")));
-
-        test.setList(testList);
         test.setPath(new File("./tests/test2_out.html"));
 
 
@@ -73,12 +74,6 @@ class FileHandlerTest {
 
     @Test
     void exportJSONTest() {
-        List<Item> testList = new ArrayList<>(Arrays.asList(
-                new Item("Test Item", "0.01", "A-090-000-000"),
-                new Item("Test Item 2", "0.02", "A-091-000-000"),
-                new Item("Test Item 3", "0.03", "A-092-000-000")));
-
-        test.setList(testList);
         test.setPath(new File("./tests/test3_out.json"));
 
         //Stupid Gson using \n line breaks
@@ -120,6 +115,45 @@ class FileHandlerTest {
 
         assertEquals(expected, actual);
 
+    }
+
+    @Test
+    void importTextTest() {
+        test.setPath(new File("./tests/test1_out.txt"));
+
+        List<Item> expected = test.getList();
+
+        List<Item> actual = test.importText();
+
+        assertEquals(expected.get(0).getName(), actual.get(0).getName());
+        assertEquals(expected.get(1).getName(), actual.get(1).getName());
+        assertEquals(expected.get(2).getName(), actual.get(2).getName());
+    }
+
+    @Test
+    void importHTMLTest() {
+        test.setPath(new File("./tests/test2_out.html"));
+
+        List<Item> expected = test.getList();
+
+        List<Item> actual = test.importHTML();
+
+        assertEquals(expected.get(0).getName(), actual.get(0).getName());
+        assertEquals(expected.get(1).getName(), actual.get(1).getName());
+        assertEquals(expected.get(2).getName(), actual.get(2).getName());
+    }
+
+    @Test
+    void importJSONTest() {
+        test.setPath(new File("./tests/test3_out.json"));
+
+        List<Item> expected = test.getList();
+
+        List<Item> actual = test.importJSON();
+
+        assertEquals(expected.get(0).getName(), actual.get(0).getName());
+        assertEquals(expected.get(1).getName(), actual.get(1).getName());
+        assertEquals(expected.get(2).getName(), actual.get(2).getName());
     }
 
 }

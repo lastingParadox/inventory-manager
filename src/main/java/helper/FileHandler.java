@@ -2,13 +2,15 @@ package helper;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import data.Item;
+import org.apache.commons.lang3.StringUtils;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,70 +33,83 @@ public class FileHandler {
     }
 
     public List<Item> fileImport() {
-        //Create a list of items "importList"
-        //Create String "fileType" = Files.probeContentType(path)
+        String fileType = "";
+        try {
+            fileType = Files.probeContentType(Paths.get(path.getPath()));
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
 
-        //If fileType equals "text/plain":
-            //importList = importText()
-        //Else If fileType equals "text/html":
-            //importList = importHTML()
-        //Else If fileType equals "application/json"
-            //importList = importJSON()
-
-        //return importList
-        return Collections.emptyList();
+        return switch (fileType) {
+            case "text/plain" -> importText();
+            case "text/html" -> importHTML();
+            case "application/json" -> importJSON();
+            default -> Collections.emptyList();
+        };
     }
 
     public List<Item> importText() {
-        //Create a list of Items "importList"
-        //Try to create a new BufferedReader "reader" to read path
-            //String line = reader.readLine()
-            //line = reader.readLine()
-            //While line is not null:
-                //Array of Strings info = line.split with delimiter "%t"
+        List<Item> importList = new ArrayList<>();
 
-                //Item item is a new item with values info[0], info[1], info[2]
+        try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            int loopCount = 1;
+            String line = reader.readLine();
 
-                //Add item to importList
-                //line = reader.readLine()
-        //Catch an exception:
-            //return an empty list
+            while(line != null) {
+                if (loopCount == 1) {
+                    line = reader.readLine();
+                    loopCount++;
+                }
+                else {
+                    String[] info = line.split("\\t");
+                    Item item = new Item(info[0], info[1], info[2]);
+                    importList.add(item);
 
-        //return importList
-        return Collections.emptyList();
+                    line = reader.readLine();
+                }
+            }
+
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
+
+        return importList;
     }
 
     public List<Item> importHTML() {
-        //Create a list of Items "importList"
-        //Try to create a new BufferedReader "reader" to read path
-            //String line = reader.readLine()
-            //line = reader.readLine()
-            //While line is not null:
-                //If line does not contain "/td":
-                    //line = reader.readLine()
-                //Else:
-                    //Array of Strings info
-                    //Loop 3 times:
-                        //info[loop #] = subString of line between "<td>" and "</td>"
-                    //Item item is a new item with values info[0], info[1], info[2]
-                    //Add item to importList
-                    //line = reader.readLine()
-        //Catch an exception:
-            //return an empty list
+        List<Item> importList = new ArrayList<>();
+        try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            String line = reader.readLine();
+            while(line != null) {
+                if (line.contains("</td>")) {
+                    String[] info = new String[3];
+                    for(int i = 0; i < 3; i++) {
+                        info[i] = StringUtils.substringBetween(line, "<td>", "</td>");
+                        line = reader.readLine();
+                    }
+                    Item item = new Item(info[0], info[1], info[2]);
+                    importList.add(item);
+                }
+                line = reader.readLine();
+            }
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
 
-        //return importList
-        return Collections.emptyList();
+        return importList;
     }
 
     public List<Item> importJSON() {
-        //Create a list of Items "inventory"
-        //Try to create a new BufferedReader "reader" to read path
-            //inventory = gson.fromJson(reader, Item.Class)
-        //Catch an Exception
-            //Return an empty list
+        List<Item> inventory;
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            Gson gson = new Gson();
+            Type listOfItemToken = new TypeToken<ArrayList<Item>>() {}.getType();
+            inventory = gson.fromJson(reader, listOfItemToken);
+        } catch (IOException e) {
+            return Collections.emptyList();
+        }
 
-        //return importList
-        return Collections.emptyList();
+        return inventory;
     }
 
     public String fileExport()  {
@@ -164,6 +179,10 @@ public class FileHandler {
         }
 
         return output;
+    }
+
+    public List<Item> getList() {
+        return list;
     }
 
     public void setPath(File path) {

@@ -5,35 +5,50 @@
 
 package helper;
 
+import data.Item;
+
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Validator {
 
     public String verifyName(String name) {
-        //If name is null:
-            //return null
-        //Else if name.length() is less than 2 or greater than 256:
-            //return null
-        //return name
-        return null;
+        if (name.length() < 2 || name.length() > 256)
+            return null;
+
+        return name;
     }
 
     public String verifyValue(String value) {
-        //Try to parse value as a double
-            //If double value is less than zero:
-                //return null
-            //Else:
-                //return value
-        //If unable to, return null
-        return null;
+        try {
+            if (Double.parseDouble(value) < 0)
+                return null;
+            else
+                return value;
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     public String verifySerial(String serial) {
-        //Create new Pattern "pattern" set to compile "[a-zA-z]-[a-zA-z0-9]{3}-[a-zA-z0-9]{3}-[a-zA-z0-9]{3}"
-        //Create new Matcher "matcher" set to match serial
-        //If matcher.matches() is true:
-            //return serial
-        //Else:
-            //return null
-        return null;
+        Pattern pattern = Pattern.compile("[A-z]-[A-z0-9]{3}-[A-z0-9]{3}-[A-z0-9]{3}");
+        Matcher matcher = pattern.matcher(serial);
+
+        if (matcher.matches()) {
+            return serial;
+        }
+        else {
+            return null;
+        }
+    }
+
+    public String verifyUnique(String serial, List<Item> inventory) {
+        for (Item item : inventory) {
+            if (item.getSerial().equals(serial))
+                return null;
+        }
+        return serial;
     }
 
 }
