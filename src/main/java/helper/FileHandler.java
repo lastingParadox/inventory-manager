@@ -4,8 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import data.Item;
+import javafx.scene.control.Alert;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.swing.filechooser.FileSystemView;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
@@ -23,8 +27,7 @@ public class FileHandler {
         this.path = path;
     }
 
-    public FileHandler(File path, List<Item> list) {
-        this.path = path;
+    public FileHandler(List<Item> list) {
         this.list = list;
     }
 
@@ -179,6 +182,49 @@ public class FileHandler {
         }
 
         return output;
+    }
+
+    public void fileExportGUI(Stage stage, String fileType) {
+        String[] names = {"HTML Files", "JSON Files", "Text Files", "*.html", "*.json", "*.txt"};
+        FileChooser fileExport = new FileChooser();
+        fileExport.setTitle("Export Inventory");
+        fileExport.setInitialDirectory(FileSystemView.getFileSystemView().getDefaultDirectory());
+        if (fileType.equalsIgnoreCase("html")) {
+            fileExport.setInitialFileName("Inventory.html");
+            fileExport.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter(names[0], names[3]),
+                    new FileChooser.ExtensionFilter(names[1], names[4]),
+                    new FileChooser.ExtensionFilter(names[2], names[5])
+            );
+        }
+        else if (fileType.equalsIgnoreCase("json")) {
+            fileExport.setInitialFileName("Inventory.json");
+            fileExport.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter(names[1], names[4]),
+                    new FileChooser.ExtensionFilter(names[0], names[3]),
+                    new FileChooser.ExtensionFilter(names[2], names[5])
+            );
+        }
+        else if (fileType.equalsIgnoreCase("text")) {
+            fileExport.setInitialFileName("Inventory.txt");
+            fileExport.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter(names[2], names[5]),
+                    new FileChooser.ExtensionFilter(names[0], names[3]),
+                    new FileChooser.ExtensionFilter(names[1], names[4])
+            );
+        }
+
+        this.path = fileExport.showSaveDialog(stage);
+        if (this.path == null)
+            return;
+
+        String output = fileExport();
+
+        if (output != null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Inventory successfully exported!");
+            alert.show();
+        }
     }
 
     public List<Item> getList() {

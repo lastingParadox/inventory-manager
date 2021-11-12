@@ -6,6 +6,7 @@
 package helper;
 
 import data.Item;
+import javafx.collections.ObservableList;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -16,8 +17,8 @@ public class Validator {
     public String verifyName(String name) {
         if (name.length() < 2 || name.length() > 256)
             return null;
-
-        return name;
+        else
+            return name;
     }
 
     public String verifyValue(String value) {
@@ -43,7 +44,7 @@ public class Validator {
         }
     }
 
-    public String verifyUnique(String serial, List<Item> inventory) {
+    public String verifyUnique(String serial, ObservableList<Item> inventory) {
         for (Item item : inventory) {
             if (item.getSerial().equals(serial))
                 return null;

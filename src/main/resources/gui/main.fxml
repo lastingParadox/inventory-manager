@@ -175,7 +175,7 @@
                         <Insets right="10.0" top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <TableView fx:id="itemTable" prefHeight="387.0" prefWidth="602.0">
+                  <TableView fx:id="itemTable" editable="true" prefHeight="387.0" prefWidth="602.0">
                     <columns>
                       <TableColumn fx:id="selectedColumn" prefWidth="28.0" sortable="false" />
                       <TableColumn fx:id="nameColumn" editable="false" prefWidth="302.0" sortable="false" text="Name" />

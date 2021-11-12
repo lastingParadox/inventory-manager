@@ -63,6 +63,9 @@ public class ItemList {
 
     //Getter and Setter
 
+    public ObservableList<Item> getObservableList() {
+        return items;
+    }
     public List<Item> getList() {
         return items;
     }

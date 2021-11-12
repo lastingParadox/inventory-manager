@@ -10,9 +10,11 @@ import data.ItemList;
 import helper.Validator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditItemController {
 
@@ -39,115 +41,131 @@ public class EditItemController {
 
     private ItemList inventory;
     private Item item;
-    private Validator validator;
+    private final Validator validator = new Validator();
 
     @FXML
-    void addItemButtonClicked(ActionEvent event) {
-        //StringBuilder error is a new StringBuilder
-        //If (validator.verifyName.equals(null)):
-            //Append "An item's name is required and must be between 2 and 256 characters.%n" to error
-        //If (validator.verifySerial.equals(null)):
-            //Append "An item's serial number is required and must be in the format "A-XXX-XXX-XXX"%n(A is a letter and X is a letter or a digit).%n" to error
-        //If (validator.verifyValue.equals(null)):
-            //Append "An item's value is required and must a number greater than $0.00." to error
+    void addItemButtonClicked() {
+        StringBuilder error = new StringBuilder();
+        if (validator.verifyName(nameField.getText()) == null) {
+            error.append(String.format("An item's name is required and must be between 2 and 256 characters.%n"));
+        }
+        if (validator.verifySerial(serialField.getText()) == null) {
+            error.append(String.format("An item's serial number is required and must be in the format \"A-XXX-XXX-XXX\"%n(A is a letter and X is a letter or a digit).%n"));
+        }
+        if (validator.verifyValue(valueField.getText()) == null) {
+            error.append("An item's value is required and must a number greater than $0.00.");
+        }
 
-        //If error is not empty:
-            //New alert is up type ERROR
-            //Set title of alert to "Unable to Add Item"
-            //Set context text to "Unable to add item due to:%n" + String value of error
-            //Show alert
-            //return
+        if(!error.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Unable to Add Item");
+            alert.setContentText(String.format("Unable to add item due to:%n%s", error));
+            alert.show();
+            return;
+        }
 
-        //Add new Item with nameField.getText(), valueField.getText(), serialField.getText() to inventory
-        //Get stage
-        //Close stage
+        inventory.addItem(nameField.getText(), valueField.getText(), serialField.getText());
+        Stage stage = (Stage) titleLabel.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
     void deleteItemButtonClicked(ActionEvent event) {
-        //Create new Alert "alert" as a confirmation type
-        //Set the title of the alert to "Delete 'item.getName()"
-        //Set the text of the alert to "Are you sure you want to delete 'item.getName()'?"
+        if (item == null)
+            return;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(String.format("Delete %s", item.getName()));
+        alert.setContentText(String.format("Are you sure you want to delete %s?", item.getName()));
 
-        //ButtonType yes is a new ButtonType of "yes"
-        //ButtonType no is a new ButtonType of "cancel_close"
-        //Get the button types and set them all in the alert
+        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().addAll(yes, no);
 
-        //Show the alert and wait for a button to be pressed
-            //If yes:
-                //items.remove(item)
+        alert.showAndWait().ifPresent(type -> {
+            if (type == yes) {
+                List<Item> itemAdd = new ArrayList<>();
+                itemAdd.add(item);
+                inventory.removeItems(itemAdd);
+                Stage stage = (Stage) titleLabel.getScene().getWindow();
+                stage.close();
+            }
 
-        //Get stage
-        //Close stage
+        });
     }
 
     @FXML
-    void editItemButtonClicked(ActionEvent event) {
-        //StringBuilder error is a new StringBuilder
-        //If (validator.verifyName.equals(null)):
-            //Append "An item's name is required and must be between 2 and 256 characters.%n" to error
-        //If (validator.verifySerial.equals(null)):
-            //Append "An item's serial number is required and must be in the format "A-XXX-XXX-XXX"%n(A is a letter and X is a letter or a digit).%n" to error
-        //If (validator.verifyValue.equals(null)):
-            //Append "An item's value is required and must a number greater than $0.00." to error
+    void editItemButtonClicked() {
+        StringBuilder error = new StringBuilder();
+        if (validator.verifyName(nameField.getText()) == null) {
+            error.append(String.format("An item's name is required and must be between 2 and 256 characters.%n"));
+        }
+        if (validator.verifySerial(serialField.getText()) == null || validator.verifyUnique(serialField.getText(), inventory.getObservableList()) == null) {
+            error.append(String.format("An item's serial number is required and must be a unique value in the format \"A-XXX-XXX-XXX\"%n(A is a letter and X is a letter or a digit).%n"));
+        }
+        if (validator.verifyValue(valueField.getText()) == null) {
+            error.append("An item's value is required and must a number greater than $0.00.");
+        }
 
-        //If error is not empty:
-            //New alert is up type ERROR
-            //Set title of alert to "Unable to Add Item"
-            //Set context text to "Unable to add item due to:%n" + String value of error
-            //Show alert
-            //return
+        if(!error.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Unable to Edit Item");
+            alert.setContentText(String.format("Unable to Edit item due to:%n%s", error));
+            return;
+        }
 
-        //item.setName(nameField.getText()), item.setValue(valueField.getText()), item.setSerial(serialField.getText())
-        //Get stage
-        //Close stage
+        item.setName(nameField.getText());
+        item.setValue(valueField.getText());
+        item.setSerial(serialField.getText());
+
+        Stage stage = (Stage) titleLabel.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
     void onNameFieldFill(ActionEvent event) {
-        //Used if user commits before clicking "Add/Edit item"
-        //If (validator.verifyName(nameField.getText()) == null):
-            //Alert alert is of type ERROR
-            //Set title of alert to "Invalid name"
-            //Set context text to "An item's name is required and must be between 2 and 256 characters."
-            //Show alert
+        if (validator.verifyName(nameField.getText()) == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Name");
+            alert.setContentText("An item's name is required and must be between 2 and 256 characters.");
+            alert.show();
+        }
     }
 
     @FXML
     void onSerialFieldFill(ActionEvent event) {
-        //Used if user commits before clicking "Add/Edit item"
-        //If (validator.verifySerial(serialField.getText()) == null):
-            //Alert alert is of type ERROR
-            //Set title of alert to "Invalid Serial Number"
-            //Set context text to "An item's serial number is required and must be in the format "A-XXX-XXX-XXX"%n(A is a letter and X is a letter or a digit)."
-            //Show alert
+        if (validator.verifySerial(serialField.getText()) == null || validator.verifyUnique(serialField.getText(), inventory.getObservableList()) == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Serial Number");
+            alert.setContentText("An item's serial number is required and must be a unique value in the format \"A-XXX-XXX-XXX\"%n(A is a letter and X is a letter or a digit).");
+            alert.show();
+        }
     }
 
     @FXML
     void onValueFieldFill(ActionEvent event) {
-        //Used if user commits before clicking "Add/Edit item"
-        //If (validator.verifySerial(valueField.getText()) == null):
-            //Alert alert is of type ERROR
-            //Set title of alert to "Invalid Value"
-            //Set context text to "An item's value is required and must a number greater than $0.00."
-            //Show alert
+        if (validator.verifyValue(valueField.getText()) == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid Value");
+            alert.setContentText("An item's value is required and must a number greater than $0.00.");
+            alert.show();
+        }
     }
 
     @FXML
     public void initialize() {
-        //If item = null:
-            //Set titleLabel text to "Adding Item"
-            //addItemButton is made visible
-            //editItemButton is made invisible
-        //Else:
-            //Set titleLabel text to "Editing 'item.getName()'"
-            //editItemButton is made visible
-            //addItemButton is made invisible
+        if (item == null) {
+            titleLabel.setText("Adding Item");
+            addItemButton.setVisible(true);
+            editItemButton.setVisible(false);
+        }
 
-        //Add a listener for nameField:
-            //Set nameCharCounter's text to "Count: %d characters" with the number of characters being the newField's text length
-            //If the text is over 256 characters:
-                //Set nameField's text to a substring from index 0 to 256
+        nameField.textProperty().addListener(((observable, oldValue, newValue) -> {
+            nameCharCounter.setText(String.format("Count: %d characters", nameField.getText().length()));
+            if (nameField.getText().length() > 256) {
+                nameField.setText(nameField.getText().substring(0, 256));
+            }
+        }));
+
     }
 
     public ItemList getItemList() {
@@ -164,6 +182,9 @@ public class EditItemController {
 
     public void setItem(Item item) {
         this.item = item;
+        titleLabel.setText(String.format("Editing %s", item.getName()));
+        addItemButton.setVisible(false);
+        editItemButton.setVisible(true);
     }
 
 }

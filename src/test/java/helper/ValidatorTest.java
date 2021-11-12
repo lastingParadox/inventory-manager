@@ -1,6 +1,8 @@
 package helper;
 
 import data.Item;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -47,10 +49,11 @@ class ValidatorTest {
 
     @Test
     void verifyUniqueTestNull() {
-        List<Item> testList = new ArrayList<>(Arrays.asList(
+        ObservableList<Item> testList = FXCollections.observableArrayList(Arrays.asList(
                 new Item("Test Item", "0.01", "A-090-000-000"),
                 new Item("Test Item 2", "0.02", "A-091-000-000"),
                 new Item("Test Item 3", "0.03", "A-092-000-000")));
+
 
         String actual = test.verifyUnique("A-090-000-000", testList);
 
@@ -59,7 +62,7 @@ class ValidatorTest {
 
     @Test
     void verifyUniqueTestSuccess() {
-        List<Item> testList = new ArrayList<>(Arrays.asList(
+        ObservableList<Item> testList = FXCollections.observableArrayList(Arrays.asList(
                 new Item("Test Item", "0.01", "A-090-000-000"),
                 new Item("Test Item 2", "0.02", "A-091-000-000"),
                 new Item("Test Item 3", "0.03", "A-092-000-000")));

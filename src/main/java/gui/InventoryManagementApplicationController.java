@@ -7,14 +7,30 @@ package gui;
 
 import data.Item;
 import data.ItemList;
+import helper.FileHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
+import javax.swing.filechooser.FileSystemView;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class InventoryManagementApplicationController {
 
@@ -44,12 +60,12 @@ public class InventoryManagementApplicationController {
 
     private final CheckBox selectAllBox = new CheckBox();
 
-    private ItemList inventory;
-    private FilteredList<Item> filteredList;
+    private final ItemList inventory = new ItemList();
+
+    private final FilteredList<Item> filteredList = new FilteredList<>(FXCollections.observableArrayList(inventory.getObservableList()));
 
     @FXML
     void addItemButtonClicked() throws IOException {
-        /*
         FXMLLoader loader = new FXMLLoader(getClass().getResource("edit.fxml"));
         Parent root = loader.load();
 
@@ -61,12 +77,11 @@ public class InventoryManagementApplicationController {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
         stage.setScene(scene);
         stage.setTitle("Add an Item");
-        stage.show();*/
+        stage.show();
     }
 
     @FXML
-    void clearItemButtonClicked(ActionEvent event) {
-        /*
+    void clearItemButtonClicked() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Clear all items");
         alert.setContentText("Are you sure you want to delete all items?");
@@ -76,17 +91,16 @@ public class InventoryManagementApplicationController {
         alert.showAndWait().ifPresent(type -> {
             if (type == yes)
                 inventory.clear();
-        });*/
+        });
     }
 
     @FXML
-    void clearSearchButtonClicked(ActionEvent event) {
-        //searchField.setText("");
+    void clearSearchButtonClicked() {
+        searchField.setText("");
     }
 
     @FXML
-    void deleteItemButtonClicked(ActionEvent event) {
-        /*
+    void deleteItemButtonClicked() {
         List<Item> removedItems = new ArrayList<>();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Remove Selected Items");
@@ -112,12 +126,11 @@ public class InventoryManagementApplicationController {
         alert.showAndWait().ifPresent(type -> {
             if (type == yes)
                 inventory.removeItems(removedItems);
-        });*/
+        });
     }
 
     @FXML
-    void editItemButtonClicked(ActionEvent event) throws IOException {
-        /*
+    void editItemButtonClicked() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("edit.fxml"));
         Parent root = loader.load();
 
@@ -130,84 +143,28 @@ public class InventoryManagementApplicationController {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
         stage.setScene(scene);
         stage.setTitle(String.format("Edit %s", controller.getItem().getName()));
-        stage.show();*/
+        stage.show();
     }
 
     @FXML
     void exportHTMLButtonClicked() {
-        /*
         Stage stage = (Stage) itemTable.getScene().getWindow();
-        FileChooser fileExport = new FileChooser();
-        fileExport.setTitle("Export Inventory");
-        fileExport.setInitialDirectory(FileSystemView.getFileSystemView().getDefaultDirectory());
-        fileExport.setInitialFileName("Inventory.html");
-        fileExport.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("HTML Files", "*.html"),
-                new FileChooser.ExtensionFilter("JSON Files", "*.json"),
-                new FileChooser.ExtensionFilter("Text Files", "*.txt")
-        );
-
-        File path = fileExport.showSaveDialog(stage);
-        if (path == null)
-            return;
-
-        FileHandler fileHandler = new FileHandler(path, inventory.getList());
-        String output = fileHandler.fileExport();
-
-        if (output != null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setContentText("Inventory successfully exported!");
-            alert.show();
-        }*/
+        FileHandler fileHandler = new FileHandler(inventory.getList());
+        fileHandler.fileExportGUI(stage, "html");
     }
 
     @FXML
-    void exportJSONButtonClicked(ActionEvent event) {
-        //Stage "stage" is the current stage
-        //Create new FileChooser "fileExport" = new FileChooser()"
-        //Set fileExport's title to "Export Inventory"
-        //Set fileExport's initialDirectory to default documents directory ("FileSystemView.getFileSystemView().getDefaultDirectory().getPath()")
-        //Set fileExport's initialFileName as "Inventory.json"
-        //Add the following extensions to fileExport:
-            //"JSON Files", "*.json"
-            //"HTML Files", "*.html"
-            //"Text Files", "*.txt"
-
-        //Create new File "path" set to saveDialog's output (fileExport.showSaveDialog(stage))
-        //If path is null, return
-
-        //Create new fileHandler "fileHandler" with path, inventory
-        //String output = fileHandler.fileExport()
-
-        //If output is not null:
-        //Create new alert of type information
-        //Set the content text of alert to "Inventory successfully exported!"
-        //Show the alert
+    void exportJSONButtonClicked() {
+        Stage stage = (Stage) itemTable.getScene().getWindow();
+        FileHandler fileHandler = new FileHandler(inventory.getList());
+        fileHandler.fileExportGUI(stage, "json");
     }
 
     @FXML
-    void exportTextButtonClicked(ActionEvent event) {
-        //Stage "stage" is the current stage
-        //Create new FileChooser "fileExport" = new FileChooser()"
-        //Set fileExport's title to "Export Inventory"
-        //Set fileExport's initialDirectory to default documents directory ("FileSystemView.getFileSystemView().getDefaultDirectory().getPath()")
-        //Set fileExport's initialFileName as "Inventory.txt"
-        //Add the following extensions to fileExport:
-            //"Text Files", "*.txt"
-            //"HTML Files", "*.html"
-            //"JSON Files", "*.json"
-
-
-        //Create new File "path" set to saveDialog's output (fileExport.showSaveDialog(stage))
-        //If path is null, return
-
-        //Create new fileHandler "fileHandler" with path, inventory
-        //String output = fileHandler.fileExport()
-
-        //If output is not null:
-            //Create new alert of type information
-            //Set the content text of alert to "Inventory successfully exported!"
-            //Show the alert
+    void exportTextButtonClicked() {
+        Stage stage = (Stage) itemTable.getScene().getWindow();
+        FileHandler fileHandler = new FileHandler(inventory.getList());
+        fileHandler.fileExportGUI(stage, "text");
     }
 
     @FXML
@@ -220,33 +177,37 @@ public class InventoryManagementApplicationController {
 
     @FXML
     void importButtonClicked(ActionEvent event) {
-        //Stage "stage" is the current stage
-        //Create new FileChooser "fileImport" = new FileChooser()"
-        //Set fileImport's title to "Select Inventory"
-        //Set fileImport's initialDirectory to default documents directory ("FileSystemView.getFileSystemView().getDefaultDirectory().getPath()")
-        //Add the following extensions to fileImport:
-            //"HTML Files", "*.html"
-            //"JSON Files", "*.json"
-            //"Text Files", "*.txt"
-            //"All Files", "*.*"
+        Stage stage = (Stage) itemTable.getScene().getWindow();
+        FileChooser fileImport = new FileChooser();
+        fileImport.setTitle("Select Inventory");
+        fileImport.setInitialDirectory(FileSystemView.getFileSystemView().getDefaultDirectory());
+        fileImport.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("HTML Files", "*.html"),
+                new FileChooser.ExtensionFilter("JSON Files", "*.json"),
+                new FileChooser.ExtensionFilter("Text Files", "*.txt"),
+                new FileChooser.ExtensionFilter("All Files", "*.*")
+        );
 
-        //Create new File "path" set to openDialog's output (fileImport.showOpenDialog(stage))
-        //If path is null, return
+        File path = fileImport.showOpenDialog(stage);
+        if (path == null)
+            return;
 
-        //Create new fileHandler "fileHandler" with path
-        //List of items "list" = fileHandler.fileImport()
+        FileHandler fileHandler = new FileHandler(path);
 
-        //If list is empty:
-            //Create new alert of type error
-            //Set the content text of alert to "Inventory failed to import."
-            //Show the alert
-            //return
+        List<Item> items = fileHandler.fileImport();
 
-        //inventory.setList(list)
+        if (items.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Inventory failed to import.");
+            alert.show();
+            return;
+        }
 
-        //Create new alert of type information
-        //Set the content text of alert to "Inventory successfully imported!"
-        //Show the alert
+        inventory.setList(items);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Inventory successfully imported!");
+        alert.show();
     }
 
     @FXML
@@ -262,64 +223,73 @@ public class InventoryManagementApplicationController {
 
     @FXML
     void sortNameButtonClicked(ActionEvent event) {
-        //inventory.sortByName()
+        inventory.sortByName();
     }
 
     @FXML
     void sortSerialButtonClicked(ActionEvent event) {
-        //inventory.sortBySerial()
+        inventory.sortBySerial();
     }
 
     @FXML
     void sortValueButtonClicked(ActionEvent event) {
-        //inventory.sortByValue()
+        inventory.sortByValue();
     }
 
     @FXML
     public void initialize() {
-        //Set itemTable items to inventory.getList()
-        //Set filteredList items to inventory.getList()
+        itemTable.setItems(inventory.getObservableList());
 
-        //Set the row factory of itemTable
-            //Create new TableRow of Items "row"
-            //row.setOnMouseClicked(event ->
-                //If the row is clicked twice and the row is not empty:
-                    //Item rowItem = row.getItem()
-                    //editItemRowClicked(rowItem)
-            //return row
+        itemTable.setRowFactory(table -> {
+            TableRow<Item> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    Item rowData = row.getItem();
+                    try {
+                        editItemRowClicked(rowData);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            return row;
+        });
 
         //Ensures that the correct menu displays upon initializing the program
         homeView.setVisible(true);
         itemsView.setVisible(false);
 
-        //Set the cell value factory of the selected column to item.getSelected()
-        //Set the cell factory of selected column to CheckBoxTableCells
-        //Add a listener for the selectAllBox when checked:
-            //All items in the list have their selected value set to true or false when checked or unchecked
+        selectedColumn.setCellValueFactory(param -> param.getValue().getSelected());
+        selectedColumn.setCellFactory(column -> new CheckBoxTableCell<>());
+        selectAllBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            for(Item item : inventory.getObservableList()) {
+                item.setSelected(newValue);
+            }
+        });
 
-        //Set the cell value factory of the name column to a new PropertyValueFactory "name"
-        //Set the cell value factory of the value column to a new PropertyValueFactory "value"
-        //Set the cell value factory of the serial column to a new PropertyValueFactory "serial"
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+        serialColumn.setCellValueFactory(new PropertyValueFactory<>("serial"));
 
-        //Add a listener for the searchBox when typed in:
-            //Set the predicate of filteredList to inventory.createPredicate(newValue)
-            //Set itemTable items to filteredList
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(inventory.createPredicate(newValue));
+        });
     }
 
-    public void editItemRowClicked(Item rowItem) {
-        //Create new FXMLLoader loader set to "edit.fxml"
-        //Create new Parent root = loader.load()
+    public void editItemRowClicked(Item rowItem) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("edit.fxml"));
+        Parent root = loader.load();
 
-        //Stage stage = new Stage()
+        Stage stage = new Stage();
+        EditItemController controller = loader.getController();
+        controller.setItemList(inventory);
+        controller.setItem(rowItem);
 
-        //Create new EditItemController controller = loader.getController()
-        //controller.setItemList(inventory)
-        //controller.setItem(rowItem)
-
-        //Scene scene = new Scene(root)
-        //Set the stylesheet of the scene to "styles.css"
-        //Set the title to "Edit an Item"
-        //Show stage
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.setTitle(String.format("Edit %s", controller.getItem().getName()));
+        stage.show();
     }
 
 }

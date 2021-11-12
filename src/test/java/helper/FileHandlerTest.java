@@ -40,7 +40,6 @@ class FileHandlerTest {
         String actual = test.exportText();
 
         assertEquals(expected, actual);
-
     }
 
     @Test
@@ -69,7 +68,6 @@ class FileHandlerTest {
         String actual = test.exportHTML();
 
         assertEquals(expected, actual);
-
     }
 
     @Test
@@ -114,7 +112,6 @@ class FileHandlerTest {
         String actual = test.exportJSON();
 
         assertEquals(expected, actual);
-
     }
 
     @Test

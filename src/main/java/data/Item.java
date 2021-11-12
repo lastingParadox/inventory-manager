@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 
 public class Item {
 
-    private SimpleBooleanProperty selected = new SimpleBooleanProperty(false);
+    private final SimpleBooleanProperty selected = new SimpleBooleanProperty(false);
     private String name;
     private BigDecimal value;
     private String serialNumber;
@@ -23,13 +23,11 @@ public class Item {
     }
 
     public SimpleBooleanProperty getSelected() {
-        //return selected
-        return null;
+        return selected;
     }
 
     public boolean getSelectedValue() {
-        //return selected.getValue()
-        return false;
+        return selected.getValue();
     }
 
     public String getName() {
@@ -45,19 +43,19 @@ public class Item {
     }
 
     public void setSelected(boolean selected) {
-        //this selected is set to selected
+        this.selected.setValue(selected);
     }
 
     public void setName(String name) {
-        //this name = name
+        this.name = name;
     }
 
     public void setValue(String value) {
-        //this value.setValue(value)
+        this.value = BigDecimal.valueOf(Long.parseLong(value));
     }
 
     public void setSerial(String serial) {
-        //this serial = serial
+        this.serialNumber = serial;
     }
 
 }
