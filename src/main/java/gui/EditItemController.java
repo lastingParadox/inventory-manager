@@ -19,9 +19,6 @@ import java.util.List;
 public class EditItemController {
 
     @FXML
-    private Button addItemButton;
-
-    @FXML
     private Button editItemButton;
 
     @FXML
@@ -42,32 +39,6 @@ public class EditItemController {
     private ItemList inventory;
     private Item item;
     private final Validator validator = new Validator();
-
-    @FXML
-    void addItemButtonClicked() {
-        StringBuilder error = new StringBuilder();
-        if (validator.verifyName(nameField.getText()) == null) {
-            error.append(String.format("An item's name is required and must be between 2 and 256 characters.%n"));
-        }
-        if (validator.verifySerial(serialField.getText()) == null) {
-            error.append(String.format("An item's serial number is required and must be in the format \"A-XXX-XXX-XXX\"%n(A is a letter and X is a letter or a digit).%n"));
-        }
-        if (validator.verifyValue(valueField.getText()) == null) {
-            error.append("An item's value is required and must a number greater than $0.00.");
-        }
-
-        if(!error.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Unable to Add Item");
-            alert.setContentText(String.format("Unable to add item due to:%n%s", error));
-            alert.show();
-            return;
-        }
-
-        inventory.addItem(nameField.getText(), valueField.getText(), serialField.getText());
-        Stage stage = (Stage) titleLabel.getScene().getWindow();
-        stage.close();
-    }
 
     @FXML
     void deleteItemButtonClicked(ActionEvent event) {
@@ -99,8 +70,11 @@ public class EditItemController {
         if (validator.verifyName(nameField.getText()) == null) {
             error.append(String.format("An item's name is required and must be between 2 and 256 characters.%n"));
         }
-        if (validator.verifySerial(serialField.getText()) == null || validator.verifyUnique(serialField.getText(), inventory.getObservableList()) == null) {
-            error.append(String.format("An item's serial number is required and must be a unique value in the format \"A-XXX-XXX-XXX\"%n(A is a letter and X is a letter or a digit).%n"));
+        if (validator.verifySerial(serialField.getText()) == null) {
+            error.append(String.format("An item's serial number is required and must be in the format \"A-XXX-XXX-XXX\"%n(A is a letter and X is a letter or a digit).%n"));
+        }
+        if (validator.verifyUnique(serialField.getText(), inventory.getObservableList()) == null && !serialField.getText().equals(item.getSerial())) {
+            error.append(String.format("An item's serial number must be unique.%n"));
         }
         if (validator.verifyValue(valueField.getText()) == null) {
             error.append("An item's value is required and must a number greater than $0.00.");
@@ -109,7 +83,8 @@ public class EditItemController {
         if(!error.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Unable to Edit Item");
-            alert.setContentText(String.format("Unable to Edit item due to:%n%s", error));
+            alert.setContentText(String.format("Unable to edit item due to:%n%s", error));
+            alert.show();
             return;
         }
 
@@ -153,12 +128,6 @@ public class EditItemController {
 
     @FXML
     public void initialize() {
-        if (item == null) {
-            titleLabel.setText("Adding Item");
-            addItemButton.setVisible(true);
-            editItemButton.setVisible(false);
-        }
-
         nameField.textProperty().addListener(((observable, oldValue, newValue) -> {
             nameCharCounter.setText(String.format("Count: %d characters", nameField.getText().length()));
             if (nameField.getText().length() > 256) {
@@ -183,8 +152,9 @@ public class EditItemController {
     public void setItem(Item item) {
         this.item = item;
         titleLabel.setText(String.format("Editing %s", item.getName()));
-        addItemButton.setVisible(false);
-        editItemButton.setVisible(true);
+        nameField.setText(item.getName());
+        valueField.setText(item.getValue().toString());
+        serialField.setText(item.getSerial());
     }
 
 }

@@ -8,6 +8,7 @@ package data;
 import javafx.beans.property.SimpleBooleanProperty;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Item {
 
@@ -19,6 +20,7 @@ public class Item {
     public Item(String name, String value, String serialNumber) {
         this.name = name;
         this.value = new BigDecimal(value);
+        this.value = this.value.setScale(2, RoundingMode.HALF_UP);
         this.serialNumber = serialNumber;
     }
 

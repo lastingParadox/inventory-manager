@@ -86,11 +86,6 @@
                      <content>
                         <VBox alignment="TOP_CENTER" prefHeight="92.0" prefWidth="198.0" spacing="5.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#addItemButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Add New Item">
-                                 <VBox.margin>
-                                    <Insets top="5.0" />
-                                 </VBox.margin>
-                              </Button>
                               <Button mnemonicParsing="false" onAction="#editItemButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Edit Highlighted Item" />
                               <Button mnemonicParsing="false" onAction="#deleteItemButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Delete Selected Items">
                                  <VBox.margin>
@@ -123,7 +118,7 @@
    <center>
       <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox fx:id="homeView" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+            <VBox fx:id="homeView" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" visible="false">
                <children>
                   <Label fx:id="userLabel" text="Hello {USER}">
                      <font>
@@ -196,6 +191,40 @@
                         <Insets top="5.0" />
                      </VBox.margin>
                   </HBox>
+                  <VBox prefHeight="68.0" prefWidth="595.0">
+                     <children>
+                        <Label text="Create New Item:" />
+                        <HBox prefHeight="29.0" prefWidth="595.0" spacing="10.0">
+                           <children>
+                              <TextField fx:id="nameField" prefHeight="25.0" prefWidth="190.0" promptText="Item Name" />
+                              <TextField fx:id="valueField" promptText="Item Value" />
+                              <TextField fx:id="serialField" promptText="Serial Number" />
+                              <Button mnemonicParsing="false" onAction="#addItemButtonClicked" text="Add Item" />
+                           </children>
+                           <VBox.margin>
+                              <Insets right="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="17.0" prefWidth="200.0">
+                           <children>
+                              <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="191.0" text="Name Length: 0 characters" />
+                              <Label prefHeight="17.0" prefWidth="149.0" text="Must be Greater than $0.00">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label prefHeight="17.0" prefWidth="149.0" text="Format: A-XXX-XXX-XXX">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
             </VBox>
          </children>

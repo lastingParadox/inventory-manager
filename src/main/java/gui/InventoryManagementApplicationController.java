@@ -8,10 +8,10 @@ package gui;
 import data.Item;
 import data.ItemList;
 import helper.FileHandler;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import helper.Validator;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +28,7 @@ import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -46,11 +47,15 @@ public class InventoryManagementApplicationController {
 
     @FXML private TableColumn<Item, String> nameColumn;
 
+    @FXML private TextField nameField;
+
     @FXML private TextField searchField;
 
     @FXML private TableColumn<Item, Boolean> selectedColumn;
 
     @FXML private TableColumn<Item, String> serialColumn;
+
+    @FXML private TextField serialField;
 
     @FXML private Label timeLabel;
 
@@ -58,26 +63,40 @@ public class InventoryManagementApplicationController {
 
     @FXML private TableColumn<Item, BigDecimal> valueColumn;
 
+    @FXML private TextField valueField;
+
     private final CheckBox selectAllBox = new CheckBox();
 
     private final ItemList inventory = new ItemList();
 
-    private final FilteredList<Item> filteredList = new FilteredList<>(FXCollections.observableArrayList(inventory.getObservableList()));
+    private final Validator validator = new Validator();
 
     @FXML
-    void addItemButtonClicked() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("edit.fxml"));
-        Parent root = loader.load();
+    void addItemButtonClicked() {
+        StringBuilder error = new StringBuilder();
+        if (validator.verifyName(nameField.getText()) == null) {
+            error.append(String.format("An item's name is required and must be between 2 and 256 characters.%n"));
+        }
+        if (validator.verifySerial(serialField.getText()) == null) {
+            error.append(String.format("An item's serial number is required and must be in the format \"A-XXX-XXX-XXX\"%n(A is a letter and X is a letter or a digit).%n"));
+        }
+        if (validator.verifyUnique(serialField.getText(), inventory.getObservableList()) == null) {
+            error.append(String.format("An item's serial number must be unique.%n"));
+        }
+        if (validator.verifyValue(valueField.getText()) == null) {
+            error.append("An item's value is required and must a number greater than $0.00.");
+        }
 
-        Stage stage = new Stage();
-        EditItemController controller = loader.getController();
-        controller.setItemList(inventory);
+        if(!error.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Unable to Add Item");
+            alert.setContentText(String.format("Unable to add item due to:%n%s", error));
+            alert.show();
+            return;
+        }
 
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
-        stage.setScene(scene);
-        stage.setTitle("Add an Item");
-        stage.show();
+        inventory.addItem(nameField.getText(), valueField.getText(), serialField.getText());
+        itemTable.refresh();
     }
 
     @FXML
@@ -92,6 +111,7 @@ public class InventoryManagementApplicationController {
             if (type == yes)
                 inventory.clear();
         });
+        itemTable.refresh();
     }
 
     @FXML
@@ -127,10 +147,13 @@ public class InventoryManagementApplicationController {
             if (type == yes)
                 inventory.removeItems(removedItems);
         });
+        itemTable.refresh();
     }
 
     @FXML
     void editItemButtonClicked() throws IOException {
+        if (itemTable.getSelectionModel().getSelectedItem() == null)
+            return;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("edit.fxml"));
         Parent root = loader.load();
 
@@ -182,9 +205,7 @@ public class InventoryManagementApplicationController {
         fileImport.setTitle("Select Inventory");
         fileImport.setInitialDirectory(FileSystemView.getFileSystemView().getDefaultDirectory());
         fileImport.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("HTML Files", "*.html"),
-                new FileChooser.ExtensionFilter("JSON Files", "*.json"),
-                new FileChooser.ExtensionFilter("Text Files", "*.txt"),
+                new FileChooser.ExtensionFilter("Inventory Files", "*.html", "*.json", "*.txt"),
                 new FileChooser.ExtensionFilter("All Files", "*.*")
         );
 
@@ -204,6 +225,7 @@ public class InventoryManagementApplicationController {
         }
 
         inventory.setList(items);
+        selectAllBox.setSelected(false);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText("Inventory successfully imported!");
@@ -217,8 +239,6 @@ public class InventoryManagementApplicationController {
         //Code only exists to show off both menus in initial design
         itemsView.setVisible(true);
         homeView.setVisible(false);
-        selectAllBox.setUserData(selectedColumn);
-        selectedColumn.setGraphic(selectAllBox);
     }
 
     @FXML
@@ -239,6 +259,8 @@ public class InventoryManagementApplicationController {
     @FXML
     public void initialize() {
         itemTable.setItems(inventory.getObservableList());
+        selectAllBox.setUserData(selectedColumn);
+        selectedColumn.setGraphic(selectAllBox);
 
         itemTable.setRowFactory(table -> {
             TableRow<Item> row = new TableRow<>();
@@ -256,8 +278,8 @@ public class InventoryManagementApplicationController {
         });
 
         //Ensures that the correct menu displays upon initializing the program
-        homeView.setVisible(true);
-        itemsView.setVisible(false);
+        homeView.setVisible(false);
+        itemsView.setVisible(true);
 
         selectedColumn.setCellValueFactory(param -> param.getValue().getSelected());
         selectedColumn.setCellFactory(column -> new CheckBoxTableCell<>());
@@ -269,10 +291,28 @@ public class InventoryManagementApplicationController {
 
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+
+        DecimalFormat df = new DecimalFormat("$0.00");
+        valueColumn.setCellFactory(param -> new TableCell<>() {
+            @Override
+            protected void updateItem(BigDecimal item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("");
+                } else {
+                    setText(df.format(item));
+                }
+            }
+        });
+
         serialColumn.setCellValueFactory(new PropertyValueFactory<>("serial"));
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            FilteredList<Item> filteredList = new FilteredList<>(FXCollections.observableArrayList(inventory.getObservableList()));
             filteredList.setPredicate(inventory.createPredicate(newValue));
+            SortedList<Item> sortedList = new SortedList<>(filteredList);
+            sortedList.comparatorProperty().bind(itemTable.comparatorProperty());
+            itemTable.setItems(sortedList);
         });
     }
 
@@ -290,6 +330,10 @@ public class InventoryManagementApplicationController {
         stage.setScene(scene);
         stage.setTitle(String.format("Edit %s", controller.getItem().getName()));
         stage.show();
+    }
+
+    public TableView getTable() {
+        return itemTable;
     }
 
 }

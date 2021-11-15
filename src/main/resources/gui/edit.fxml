@@ -9,7 +9,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -118,12 +117,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="25.0" prefWidth="338.0" spacing="50.0">
                <children>
-                  <StackPane prefHeight="25.0" prefWidth="70.0">
-                     <children>
-                        <Button fx:id="editItemButton" mnemonicParsing="false" onAction="#editItemButtonClicked" text="Edit Item" />
-                        <Button fx:id="addItemButton" mnemonicParsing="false" onAction="#addItemButtonClicked" text="Add Item" visible="false" />
-                     </children>
-                  </StackPane>
+                  <Button fx:id="editItemButton" mnemonicParsing="false" onAction="#editItemButtonClicked" text="Edit Item" />
                   <Button mnemonicParsing="false" onAction="#deleteItemButtonClicked" text="Delete Item" />
                </children>
                <VBox.margin>
