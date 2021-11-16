@@ -39,12 +39,24 @@ public class ItemList {
         items.sort(Comparator.comparing(Item::getName));
     }
 
+    public void inverseSortByName() {
+        items.sort((o1, o2) -> Integer.compare(0, o1.getName().compareTo(o2.getName())));
+    }
+
     public void sortByValue() {
         items.sort(Comparator.comparing(Item::getValue));
     }
 
+    public void inverseSortByValue() {
+        items.sort((o1, o2) -> Integer.compare(0, o1.getValue().compareTo(o2.getValue())));
+    }
+
     public void sortBySerial() {
         items.sort(Comparator.comparing(Item::getSerial));
+    }
+
+    public void inverseSortBySerial() {
+        items.sort((o1, o2) -> Integer.compare(0, o1.getSerial().compareTo(o2.getSerial())));
     }
 
     //Filter Stuff
@@ -61,13 +73,14 @@ public class ItemList {
         };
     }
 
-    //Getter and Setter
+    //Getters and Setter
 
     public ObservableList<Item> getObservableList() {
         return items;
     }
+
     public List<Item> getList() {
-        return items;
+        return getObservableList();
     }
 
     public void setList(List<Item> newList) {

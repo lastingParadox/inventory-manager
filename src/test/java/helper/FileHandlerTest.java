@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+ *  Copyright 2021 Zander Preston
+ */
+
 package helper;
 
 import data.Item;
@@ -78,31 +83,19 @@ class FileHandlerTest {
         String expected = """
                 [
                   {
-                    "selected": {
-                      "name": "",
-                      "value": false,
-                      "valid": true
-                    },
+                    "selected": false,
                     "name": "Test Item",
                     "value": 0.01,
                     "serialNumber": "A-090-000-000"
                   },
                   {
-                    "selected": {
-                      "name": "",
-                      "value": false,
-                      "valid": true
-                    },
+                    "selected": false,
                     "name": "Test Item 2",
                     "value": 0.02,
                     "serialNumber": "A-091-000-000"
                   },
                   {
-                    "selected": {
-                      "name": "",
-                      "value": false,
-                      "valid": true
-                    },
+                    "selected": false,
                     "name": "Test Item 3",
                     "value": 0.03,
                     "serialNumber": "A-092-000-000"

@@ -19,9 +19,6 @@ import java.util.List;
 public class EditItemController {
 
     @FXML
-    private Button editItemButton;
-
-    @FXML
     private Label nameCharCounter;
 
     @FXML
@@ -39,6 +36,7 @@ public class EditItemController {
     private ItemList inventory;
     private Item item;
     private final Validator validator = new Validator();
+    private InventoryManagementApplicationController inventoryController = null;
 
     @FXML
     void deleteItemButtonClicked(ActionEvent event) {
@@ -91,6 +89,8 @@ public class EditItemController {
         item.setName(nameField.getText());
         item.setValue(valueField.getText());
         item.setSerial(serialField.getText());
+
+        inventoryController.refreshTable();
 
         Stage stage = (Stage) titleLabel.getScene().getWindow();
         stage.close();
@@ -155,6 +155,10 @@ public class EditItemController {
         nameField.setText(item.getName());
         valueField.setText(item.getValue().toString());
         serialField.setText(item.getSerial());
+    }
+
+    public void setInventoryController(InventoryManagementApplicationController inventoryController) {
+        this.inventoryController = inventoryController;
     }
 
 }

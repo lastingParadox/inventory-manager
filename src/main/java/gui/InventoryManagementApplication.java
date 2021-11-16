@@ -8,6 +8,7 @@ package gui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -29,6 +30,7 @@ public class InventoryManagementApplication extends javafx.application.Applicati
     }
 
     public static void main(String[] args) {
+        Font.loadFont(InventoryManagementApplication.class.getResourceAsStream("Penumbra-HalfSerif-Std.ttf"), 16);
         launch(args);
     }
 

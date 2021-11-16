@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+ *  Copyright 2021 Zander Preston
+ */
+
 package data;
 
 import javafx.collections.FXCollections;
@@ -94,6 +99,22 @@ class ItemListTest {
     }
 
     @Test
+    void inverseSortByNameTest() {
+        List<Item> testList = new ArrayList<>(Arrays.asList(
+                new Item("Test Item 5", "100", "Z-090-000-000"),
+                new Item("Test Item 1", "50", "K-091-000-000"),
+                new Item("Test Item 2", "75", "A-092-000-000")));
+
+        test.setList(testList);
+        Item expected = test.getList().get(2);
+
+        test.inverseSortByName();
+        Item actual = test.getList().get(1);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void sortByValueTest() {
         List<Item> testList = new ArrayList<>(Arrays.asList(
                 new Item("Test Item 5", "100", "Z-090-000-000"),
@@ -110,7 +131,23 @@ class ItemListTest {
     }
 
     @Test
-    void sortByValueSerial() {
+    void inverseSortByValueTest() {
+        List<Item> testList = new ArrayList<>(Arrays.asList(
+                new Item("Test Item 5", "100", "Z-090-000-000"),
+                new Item("Test Item 1", "50", "K-091-000-000"),
+                new Item("Test Item 2", "75", "A-092-000-000")));
+
+        test.setList(testList);
+        Item expected = test.getList().get(2);
+
+        test.inverseSortByValue();
+        Item actual = test.getList().get(1);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void sortByValueSerialTest() {
         List<Item> testList = new ArrayList<>(Arrays.asList(
                 new Item("Test Item 5", "100", "Z-090-000-000"),
                 new Item("Test Item 1", "50", "K-091-000-000"),
@@ -121,6 +158,22 @@ class ItemListTest {
 
         test.sortBySerial();
         Item actual = test.getList().get(0);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void inverseSortBySerialTest() {
+        List<Item> testList = new ArrayList<>(Arrays.asList(
+                new Item("Test Item 5", "100", "Z-090-000-000"),
+                new Item("Test Item 1", "50", "K-091-000-000"),
+                new Item("Test Item 2", "75", "A-092-000-000")));
+
+        test.setList(testList);
+        Item expected = test.getList().get(1);
+
+        test.inverseSortBySerial();
+        Item actual = test.getList().get(1);
 
         assertEquals(expected, actual);
     }

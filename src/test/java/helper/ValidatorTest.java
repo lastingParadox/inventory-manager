@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Fall 2021 Application Assignment 2 Solution
+ *  Copyright 2021 Zander Preston
+ */
+
 package helper;
 
 import data.Item;
@@ -52,7 +57,6 @@ class ValidatorTest {
                 new Item("Test Item", "0.01", "A-090-000-000"),
                 new Item("Test Item 2", "0.02", "A-091-000-000"),
                 new Item("Test Item 3", "0.03", "A-092-000-000")));
-
 
         String actual = test.verifyUnique("A-090-000-000", testList);
 

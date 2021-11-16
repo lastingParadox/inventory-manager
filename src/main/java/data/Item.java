@@ -53,7 +53,7 @@ public class Item {
     }
 
     public void setValue(String value) {
-        this.value = BigDecimal.valueOf(Long.parseLong(value));
+        this.value = BigDecimal.valueOf(Double.parseDouble(value));
     }
 
     public void setSerial(String serial) {

@@ -1,13 +1,13 @@
 package helper;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import data.Item;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
+import org.hildan.fxgson.FxGson;
 
 import javax.swing.filechooser.FileSystemView;
 import java.io.*;
@@ -105,7 +105,7 @@ public class FileHandler {
     public List<Item> importJSON() {
         List<Item> inventory;
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-            Gson gson = new Gson();
+            Gson gson = FxGson.coreBuilder().setPrettyPrinting().create();
             Type listOfItemToken = new TypeToken<ArrayList<Item>>() {}.getType();
             inventory = gson.fromJson(reader, listOfItemToken);
         } catch (IOException e) {
@@ -174,7 +174,7 @@ public class FileHandler {
         }
 
         try (FileWriter writer = new FileWriter(path)) {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            Gson gson = FxGson.coreBuilder().setPrettyPrinting().create();
             output = gson.toJson(list);
             writer.write(output);
         } catch (IOException e) {
