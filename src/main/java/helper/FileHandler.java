@@ -41,6 +41,7 @@ public class FileHandler {
     }
 
     public List<Item> fileImport() {
+        //Main function for importing a file; calls the correct import function based on the fileType provided.
         String fileType = "";
         try {
             fileType = Files.probeContentType(Paths.get(path.getPath()));
@@ -57,6 +58,8 @@ public class FileHandler {
     }
 
     public List<Item> importText() {
+        //Imports the inventory from a TSV text file by reading each line, skipping the first (header) line.
+        //Returns nothing if an error occurs.
         List<Item> importList = new ArrayList<>();
 
         try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
@@ -85,7 +88,10 @@ public class FileHandler {
     }
 
     public List<Item> importHTML() {
+        //Imports the inventory from an HTML file by reading each line and extracting the information in between consecutive table cell values.
+        //Returns nothing if an error occurs.
         List<Item> importList = new ArrayList<>();
+
         try(BufferedReader reader = new BufferedReader(new FileReader(path))) {
             String line = reader.readLine();
             while(line != null) {
@@ -108,12 +114,13 @@ public class FileHandler {
     }
 
     public List<Item> importJSON() {
+        //Imports the inventory from a JSON file using the GSON FX parser. If an exception occurs, returns nothing.
         List<Item> inventory;
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             Gson gson = FxGson.coreBuilder().setPrettyPrinting().create();
             Type listOfItemToken = new TypeToken<ArrayList<Item>>() {}.getType();
             inventory = gson.fromJson(reader, listOfItemToken);
-        } catch (IOException e) {
+        } catch (Exception e) {
             return Collections.emptyList();
         }
 
@@ -121,6 +128,7 @@ public class FileHandler {
     }
 
     public String fileExport()  {
+        //Main function for exporting the inventory; calls the correct export function based on the fileType provided.
         String fileType = "";
         try {
             fileType = Files.probeContentType(Paths.get(path.getPath()));
@@ -137,6 +145,8 @@ public class FileHandler {
     }
 
     public String exportText() {
+        //Exports the inventory to a text file in a TSV format. Simply writes a new line for each item, with attributes separated by tab.
+        //Returns null if an error occurs.
         StringBuilder output = new StringBuilder();
         try (FileWriter writer = new FileWriter(path)) {
             output.append(String.format("Name\tValue\tSerial Number%n"));
@@ -151,6 +161,8 @@ public class FileHandler {
     }
 
     public String exportHTML() {
+        //Exports the inventory in an HTML format. Creates a table, exporting a new row for each item with attributes in different cells.
+        //Returns null if an error occurs.
         StringBuilder output = new StringBuilder();
         try (FileWriter writer = new FileWriter(path)) {
             output.append(String.format("<!DOCTYPE html>%n%4s<html>%n%8s<head>%n%12s<title>Inventory Table</title>%n%8s</head>%n","","","",""));
@@ -172,6 +184,8 @@ public class FileHandler {
     }
 
     public String exportJSON() {
+        //Exports the inventory in a JSON format, using a GSON FX parser.
+        //Returns null if an error occurs.
         String output;
 
         for (Item item : list) {
@@ -182,7 +196,7 @@ public class FileHandler {
             Gson gson = FxGson.coreBuilder().setPrettyPrinting().create();
             output = gson.toJson(list);
             writer.write(output);
-        } catch (IOException e) {
+        } catch (Exception e) {
             return null;
         }
 
@@ -190,6 +204,7 @@ public class FileHandler {
     }
 
     public void fileExportGUI(Stage stage, String fileType) {
+        //Sets up the FileChooser for the user to select a file to export to. Runs fileExport afterwards.
         String[] names = {"HTML Files", "JSON Files", "Text Files", "*.html", "*.json", "*.txt"};
         FileChooser fileExport = new FileChooser();
         fileExport.setTitle("Export Inventory");

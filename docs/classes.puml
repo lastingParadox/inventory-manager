@@ -2,18 +2,10 @@
 
 package "data" {
 
-    class BigDecimalCurrency {
-        -BigDecimal value
-
-        +String toString()
-        +BigDecimal getValue()
-        +setValue(String)
-    }
-
     class Item {
         -SimpleBooleanProperty selected
         -String name
-        -BigDecimalCurrency value
+        -BigDecimal value
         -String serialNumber
 
         +SimpleBooleanProperty getSelected()
@@ -34,11 +26,15 @@ package "data" {
         +void removeItems(List<Item>)
         +void clear()
         +void sortByName()
+        +void inverseSortByName()
         +void sortByValue()
+        +void inverseSortByValue()
         +void sortBySerial()
+        +void inverseSortBySerial()
         +boolean searchItem(Item, String)
         +Predicate<Item> createPredicate(String)
-        +ObservableList<Item> getList()
+        +ObservableList<Item> getObservableList()
+        +List<Item> getList()
         +void setList(List<Item> newList)
     }
 
@@ -47,8 +43,6 @@ package "data" {
 package "gui" {
     class EditItemController {
         ..@FXML Variables..
-        -Button addItemButton
-        -Button editItemButton
         -Label nameCharCounter
         -TextField nameField
         -TextField serialField
@@ -58,15 +52,18 @@ package "gui" {
         -ItemList inventory
         -Item item
         -Validator validator
+        -InventoryManagementApplicationController inventoryController
         --
         ..@FXML Methods..
-        void addItemButtonClicked
         void deleteItemButtonClicked
         void editItemButtonClicked
         void onNameFieldFill
         void onSerialFieldFill
         void onValueFieldFill
         +void initialize()
+        +Item getItem()
+        +void setItem(Item)
+        +void setInventoryController(InventoryManagementApplicationController)
     }
 
     class InventoryManagementApplication {
@@ -76,27 +73,33 @@ package "gui" {
 
     class InventoryManagementApplicationController {
         ..@FXML Variables..
-        -Label dateLabel
+        -TitledPane fileTitledPane
         -VBox homeView
-        -ListView<Item> itemList
         -TableView<Item> itemTable
+        -TitledPane itemTitledPane
         -VBox itemsView
         -TableColumn<Item, String> nameColumn
+        -TextField nameField
+        -Label nameLengthCounter
         -TextField searchField
         -TableColumn<Item, Boolean> selectedColumn
         -TableColumn<Item, String> serialColumn
-        -Label timeLabel
-        -Label userLabel
-        -TableColumn<Item, BigDecimalCurrency> valueColumn
+        -TextField serialField
+        -Accordion toolAccordion
+        -TableColumn<Item, BigDecimal> valueColumn
+        -TextField valueField
         ..Other Variables..
         -CheckBox selectAllBox
         -ItemList inventory
-        -FilteredList<Item> filteredList
+        -Validator validator
+        -int sortNameCheck
+        -int sortValueCheck
+        -int sortSerialCheck
         --
         ..@FXML Methods..
         void addItemButtonClicked()
         void clearItemButtonClicked()
-        void clearSearchButtonClicked
+        void clearSearchButtonClicked()
         void deleteItemButtonClicked()
         void editItemButtonClicked()
         void exportHTMLButtonClicked()
@@ -110,7 +113,12 @@ package "gui" {
         void sortValueButtonClicked()
         +void initialize()
         ..Other Methods..
-        +void editItemRowClicked(Item)
+        -void editItemRowClicked(Item)
+        -void initializeTable()
+        -void initializeNameColumn()
+        -void initializeSelectedColumn()
+        -void initializeValueColumn()
+        +void refreshTable()
     }
 }
 
@@ -127,22 +135,24 @@ package "helper" {
         +String exportText()
         +String exportHTML()
         +String exportJSON()
+        +void fileExportGUI(Stage, fileType)
     }
 
     class Validator {
         +String verifyName(String)
         +String verifyValue(String)
-        +String
+        +String verifySerial(String)
+        +String verifyUnique(String, ObservableList<Item>)
     }
 }
 
 InventoryManagementApplication -- InventoryManagementApplicationController : < Initializes Main Stage
 InventoryManagementApplicationController -- EditItemController : < Initializes Edit Item Stage
 InventoryManagementApplicationController o-- ItemList
-InventoryManagementApplicationController o-- FileHandler
+InventoryManagementApplicationController o-- Validator
 EditItemController o-- Validator
+EditItemController o-- Item
 ItemList *-- Item
-Item *-- BigDecimalCurrency
 
 note left of ItemList::items
     Contains many Items

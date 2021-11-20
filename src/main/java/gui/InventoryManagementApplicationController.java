@@ -60,6 +60,9 @@ public class InventoryManagementApplicationController {
 
     @FXML
     void addItemButtonClicked() {
+        //Verifies item fields for any input errors and adds the item if there are no invalidations.
+
+        //Validation
         StringBuilder error = new StringBuilder();
         if (validator.verifyName(nameField.getText()) == null) {
             error.append(String.format("An item's name is required and must be between 2 and 256 characters.%n"));
@@ -74,6 +77,7 @@ public class InventoryManagementApplicationController {
             error.append("An item's value is required and must a number greater than $0.00.");
         }
 
+        //If there's an error, creates an alert popup containing all the errors and returns
         if(!error.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Unable to Add Item");
@@ -82,12 +86,18 @@ public class InventoryManagementApplicationController {
             return;
         }
 
+        //Adds the new item, clears the item fields, and refreshes the table.
         inventory.addItem(nameField.getText(), valueField.getText(), serialField.getText());
+        nameField.setText("");
+        valueField.setText("");
+        serialField.setText("");
         refreshTable();
     }
 
     @FXML
     void clearItemButtonClicked() {
+        //Creates an alert popup to verify that the user wants to clear all items.
+        //If "yes" is clicked, clears all items from the item list.
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Clear all items");
         alert.setContentText("Are you sure you want to delete all items?");
@@ -108,6 +118,10 @@ public class InventoryManagementApplicationController {
 
     @FXML
     void deleteItemButtonClicked() {
+        //Gets all the items that are checked and alerts the user, asking if they want to delete the items selected.
+        //If yes is selected, deletes the selected items.
+
+        //Item Acquisition
         List<Item> removedItems = new ArrayList<>();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Remove Selected Items");
@@ -127,6 +141,7 @@ public class InventoryManagementApplicationController {
 
         alert.setContentText(String.valueOf(content));
 
+        //If there are items selected, shows the alert. If the user pressed "yes", deletes the items.
         ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().setAll(yes, no);
@@ -139,11 +154,13 @@ public class InventoryManagementApplicationController {
 
     @FXML
     void editItemButtonClicked() throws IOException {
+        //After this button is clicked, The highlighted item is retrieved and sent to the edit item stage.
         if (itemTable.getSelectionModel().getSelectedItem() == null)
             return;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("edit.fxml"));
         Parent root = loader.load();
 
+        //Setting the controller's item attributes
         Stage stage = new Stage();
         EditItemController controller = loader.getController();
         controller.setItemList(inventory);
@@ -159,6 +176,7 @@ public class InventoryManagementApplicationController {
 
     @FXML
     void exportHTMLButtonClicked() {
+        //Grabs the item list and starts the "exportHTML" method in FileHandler
         Stage stage = (Stage) itemTable.getScene().getWindow();
         FileHandler fileHandler = new FileHandler(inventory.getList());
         fileHandler.fileExportGUI(stage, "html");
@@ -166,6 +184,7 @@ public class InventoryManagementApplicationController {
 
     @FXML
     void exportJSONButtonClicked() {
+        //Grabs the item list and starts the "exportJSON" method in FileHandler
         Stage stage = (Stage) itemTable.getScene().getWindow();
         FileHandler fileHandler = new FileHandler(inventory.getList());
         fileHandler.fileExportGUI(stage, "json");
@@ -173,6 +192,7 @@ public class InventoryManagementApplicationController {
 
     @FXML
     void exportTextButtonClicked() {
+        //Grabs the item list and starts the "exportText" method in FileHandler
         Stage stage = (Stage) itemTable.getScene().getWindow();
         FileHandler fileHandler = new FileHandler(inventory.getList());
         fileHandler.fileExportGUI(stage, "text");
@@ -180,14 +200,14 @@ public class InventoryManagementApplicationController {
 
     @FXML
     void homeButtonClicked() {
-        //When the home button is clicked, sets the home view to be visible and the item view to not be visible
-        //Code only exists to show off both menus in initial design
+        //When the home button is clicked, sets the home view to be visible and the item view to not be visible.
         homeView.setVisible(true);
         itemsView.setVisible(false);
     }
 
     @FXML
     void importButtonClicked() {
+        //Opens a FileChooser for the user to select a file and imports the file's contents through FileHandler.
         Stage stage = (Stage) itemTable.getScene().getWindow();
         FileChooser fileImport = new FileChooser();
         fileImport.setTitle("Select Inventory");
@@ -197,14 +217,16 @@ public class InventoryManagementApplicationController {
                 new FileChooser.ExtensionFilter("All Files", "*.*")
         );
 
+        //Returns if FileChooser is closed early or if the path doesn't exist.
         File path = fileImport.showOpenDialog(stage);
-        if (path == null)
+        if (path == null || !path.exists())
             return;
 
         FileHandler fileHandler = new FileHandler(path);
 
         List<Item> items = fileHandler.fileImport();
 
+        //If import failed, notifies the user and returns.
         if (items.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Inventory failed to import.");
@@ -212,6 +234,7 @@ public class InventoryManagementApplicationController {
             return;
         }
 
+        //Initializes the table after import for convenience and notifies the user of a successful import.
         inventory.setList(items);
         selectAllBox.setSelected(false);
         toolAccordion.setExpandedPane(itemTitledPane);
@@ -234,6 +257,7 @@ public class InventoryManagementApplicationController {
 
     @FXML
     void sortNameButtonClicked() {
+        //Sorts the items by name in ascending value or descending order depending on the # of times the button's been clicked.
         if(sortNameCheck % 2 == 0)
             inventory.sortByName();
         else
@@ -243,6 +267,7 @@ public class InventoryManagementApplicationController {
 
     @FXML
     void sortSerialButtonClicked() {
+        //Sorts the items by serial number in ascending value or descending order depending on the # of times the button's been clicked.
         if(sortSerialCheck % 2 == 0)
             inventory.sortBySerial();
         else
@@ -252,6 +277,7 @@ public class InventoryManagementApplicationController {
 
     @FXML
     void sortValueButtonClicked() {
+        //Sorts the items by value in ascending value or descending order depending on the # of times the button's been clicked.
         if(sortValueCheck % 2 == 0)
             inventory.sortByValue();
         else
@@ -261,6 +287,7 @@ public class InventoryManagementApplicationController {
 
     @FXML
     public void initialize() {
+        //Initializes the scene after its created.
         initializeTable();
         toolAccordion.setExpandedPane(fileTitledPane);
 
@@ -270,6 +297,7 @@ public class InventoryManagementApplicationController {
 
         nameField.textProperty().addListener(((observable, oldValue, newValue) -> nameLengthCounter.setText(String.format("Name Length: %d characters", nameField.getText().length()))));
 
+        //Listener for itemTable to show items based on what name or serial number is input into searchField
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             FilteredList<Item> filteredList = new FilteredList<>(FXCollections.observableArrayList(inventory.getObservableList()));
             filteredList.setPredicate(inventory.createPredicate(newValue));
@@ -280,9 +308,28 @@ public class InventoryManagementApplicationController {
         });
     }
 
-    public void initializeTable() {
+    private void editItemRowClicked(Item rowItem) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("edit.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        EditItemController controller = loader.getController();
+        controller.setItemList(inventory);
+        controller.setInventoryController(this);
+        controller.setItem(rowItem);
+
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("edit.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.setTitle(String.format("Edit %s", controller.getItem().getName()));
+        stage.show();
+    }
+
+    private void initializeTable() {
+        //Initializes the table when the scene is initialized.
         itemTable.setItems(inventory.getObservableList());
 
+        //Creates a use for double-clicking a row.
         itemTable.setRowFactory(table -> {
             TableRow<Item> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -305,21 +352,9 @@ public class InventoryManagementApplicationController {
         serialColumn.setCellValueFactory(new PropertyValueFactory<>("serial"));
     }
 
-    public void initializeSelectedColumn() {
-        selectAllBox.setUserData(selectedColumn);
-        selectedColumn.setGraphic(selectAllBox);
-        selectedColumn.setEditable(true);
-
-        selectedColumn.setCellValueFactory(param -> param.getValue().getSelected());
-        selectedColumn.setCellFactory(column -> new CheckBoxTableCell<>());
-        selectAllBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            for(Item item : inventory.getObservableList()) {
-                item.setSelected(newValue);
-            }
-        });
-    }
-
-    public void initializeNameColumn() {
+    private void initializeNameColumn() {
+        //Initializes the name column when the table is initialized.
+        //In particular, creates a wrapped table cell for each name to ensure that long names get their full representation.
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         nameColumn.setCellFactory(column ->
                 new TableCell<>() {
@@ -340,7 +375,25 @@ public class InventoryManagementApplicationController {
                 });
     }
 
-    public void initializeValueColumn() {
+    private void initializeSelectedColumn() {
+        //Initializes the selected column of the itemTable when its initialized.
+        selectAllBox.setUserData(selectedColumn);
+        selectedColumn.setGraphic(selectAllBox);
+        selectedColumn.setEditable(true);
+
+        //Sets the selectedColumn's values and adds a listener for the select all box to select/deselect all items when clicked.
+        selectedColumn.setCellValueFactory(param -> param.getValue().getSelected());
+        selectedColumn.setCellFactory(column -> new CheckBoxTableCell<>());
+        selectAllBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            for(Item item : inventory.getObservableList()) {
+                item.setSelected(newValue);
+            }
+        });
+    }
+
+    private void initializeValueColumn() {
+        //Initializes the value column when the table is initialized.
+        //Sets the format of the value column to be shown in a currency format (USD).
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
         DecimalFormat currency = new DecimalFormat("$0.00");
         valueColumn.setCellFactory(column -> new TableCell<>() {
@@ -358,23 +411,6 @@ public class InventoryManagementApplicationController {
 
     public void refreshTable() {
         itemTable.refresh();
-    }
-
-    public void editItemRowClicked(Item rowItem) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("edit.fxml"));
-        Parent root = loader.load();
-
-        Stage stage = new Stage();
-        EditItemController controller = loader.getController();
-        controller.setItemList(inventory);
-        controller.setInventoryController(this);
-        controller.setItem(rowItem);
-
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("edit.css")).toExternalForm());
-        stage.setScene(scene);
-        stage.setTitle(String.format("Edit %s", controller.getItem().getName()));
-        stage.show();
     }
 
 }

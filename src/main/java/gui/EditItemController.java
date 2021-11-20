@@ -17,20 +17,11 @@ import java.util.List;
 
 public class EditItemController {
 
-    @FXML
-    private Label nameCharCounter;
-
-    @FXML
-    private TextField nameField;
-
-    @FXML
-    private TextField serialField;
-
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    private TextField valueField;
+    @FXML private Label nameCharCounter;
+    @FXML private TextField nameField;
+    @FXML private TextField serialField;
+    @FXML private Label titleLabel;
+    @FXML private TextField valueField;
 
     private ItemList inventory;
     private Item item;
@@ -39,6 +30,7 @@ public class EditItemController {
 
     @FXML
     void deleteItemButtonClicked() {
+        //Verifies that the user wants to delete the item and if so, deletes the item and closes the window.
         if (item == null)
             return;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -47,7 +39,7 @@ public class EditItemController {
 
         ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().addAll(yes, no);
+        alert.getButtonTypes().setAll(yes, no);
 
         alert.showAndWait().ifPresent(type -> {
             if (type == yes) {
@@ -63,6 +55,7 @@ public class EditItemController {
 
     @FXML
     void editItemButtonClicked() {
+        //Validates the name, value, and serial fields and then adds the item to the inventory. Closes the window afterwards.
         StringBuilder error = new StringBuilder();
         if (validator.verifyName(nameField.getText()) == null) {
             error.append(String.format("An item's name is required and must be between 2 and 256 characters.%n"));
@@ -97,6 +90,7 @@ public class EditItemController {
 
     @FXML
     void onNameFieldFill() {
+        //If the user decides to commit (press enter) the name field, displays an error the value entered is invalid.
         if (validator.verifyName(nameField.getText()) == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid Name");
@@ -107,6 +101,7 @@ public class EditItemController {
 
     @FXML
     void onSerialFieldFill() {
+        //If the user decides to commit (press enter) the value field, displays an error the value entered is invalid.
         if (validator.verifySerial(serialField.getText()) == null || validator.verifyUnique(serialField.getText(), inventory.getObservableList()) == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid Serial Number");
@@ -117,6 +112,7 @@ public class EditItemController {
 
     @FXML
     void onValueFieldFill() {
+        //If the user decides to commit (press enter) the serial field, displays an error the value entered is invalid.
         if (validator.verifyValue(valueField.getText()) == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid Value");
@@ -127,6 +123,7 @@ public class EditItemController {
 
     @FXML
     public void initialize() {
+        //Adds a listener to the name field to update the character counter whenever the scene is initialized.
         nameField.textProperty().addListener(((observable, oldValue, newValue) -> {
             nameCharCounter.setText(String.format("Count: %d characters", nameField.getText().length()));
             if (nameField.getText().length() > 256) {
@@ -145,6 +142,7 @@ public class EditItemController {
     }
 
     public void setItem(Item item) {
+        //Sets the text fields to the edited item and the title to "Editing item.getName()"
         this.item = item;
         titleLabel.setText(String.format("Editing %s", item.getName()));
         nameField.setText(item.getName());
@@ -153,6 +151,7 @@ public class EditItemController {
     }
 
     public void setInventoryController(InventoryManagementApplicationController inventoryController) {
+        //Grabs the main controller only to refresh the table upon adding or deleting an item.
         this.inventoryController = inventoryController;
     }
 

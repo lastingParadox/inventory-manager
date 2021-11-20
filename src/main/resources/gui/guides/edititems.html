@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Editing Items</title>
+        <link rel="stylesheet" href="civ.css">
+    </head>
+    <body>
+        <div id="topheader">
+            <h1 class="topheader">Editing Items</h1>
+        </div>
+        
+        <h2 class="header">Introduction</h2>
+        <p>Editing items in an inventory involves either double-clicking an item or clicking an item and clicking "Edit Highlighted Item" Provided the changes are valid, the item will be edited in the inventory appropriately.</p>
+        <ul>
+            <li><a href="#location">Where Do I Edit Items?</a></li>
+            <li><a href="#edititem">Editing Items</a></li>
+        </ul>
+
+        <h2 class="header" id="location">Where Do I Edit Items?</h2>
+        <p>In the table in the items view, a item can be selected by clicking on its row. Selecting the "Edit Highlighted Item" button in the "Item Controls" section of the side menu will create a new window containing fields for the item's name, value, and serial number. Alternatively, double-clicking any item's row will create the same window containing fields for that item's attributes.</p>
+        
+        <h2 class="header" id="edititem">Editing Items</h2>
+        <p>In the editing window, three fields exist that are identical to the "Create New Item" section of the items view. Changing any of these fields will result in the associated attribute of the item being changed once the "Edit Item" button is pressed. The following rules still apply regarding the item fields:</p>
+        <ul>
+            <li>An item's name must be between 2 and 256 characters.</li>
+            <li>An item's value must be greater than or equal to 0 and must be a numerical value.</li>
+            <li>An item's serial number must be unique and in the format "A-XXX-XXX-XXX", wheres "A" stands for a letter and "X" stands for either a letter or a digit.</li>
+        </ul>
+        <p>Failure to follow any of these rules when pressing the "Edit Item" button will result in the item not being edited and a popup appearing that describes the field input errors. Upon a successful edit, the window will close, and all changes to the item will appear in the inventory and the table.</p>
+        <p>Alternatively, pressing the "Delete Item" button will show a popup verifying that the user wishes to delete the item from the inventory. If the user clicks "yes", then the item will be deleted from the inventory and the window will close.</p>
+    </body>
+</html>

@@ -76,6 +76,12 @@
     -fx-background-color: #0D3152;
 }
 
+.table-row-cell:selected {
+    -fx-background-color: #DFB674, #18669d;
+    -fx-background-insets: 0, 1 1 1 1;
+    -fx-padding: 0 0 0 0;
+}
+
 .scroll-bar:horizontal .increment-arrow,
 .scroll-bar:horizontal .decrement-arrow,
 .scroll-bar:horizontal .increment-button,

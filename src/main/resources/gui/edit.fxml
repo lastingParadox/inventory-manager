@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane styleClass="border-pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="358.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.EditItemController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="304.0" prefWidth="358.0" styleClass="border-pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.EditItemController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -88,7 +88,7 @@
             </HBox>
             <HBox prefHeight="20.0" prefWidth="328.0" spacing="10.0">
                <children>
-                  <Label text="Value Must be Greater than $0.00" />
+                  <Label text="Value Must be ≥ $0.00" />
                </children>
                <VBox.margin>
                   <Insets left="5.0" right="5.0" />

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Removing Items</title>
+        <link rel="stylesheet" href="civ.css">
+    </head>
+    <body>
+        <div id="topheader">
+            <h1 class="topheader">Removing Items</h1>
+        </div>
+        
+        <h2 class="header">Introduction</h2>
+        <p>Removing items from an inventory is a straightforward task, involving selecting items to remove and clicking a button ot remove them.</p>
+        <ul>
+            <li><a href="#location">Where Do I Remove Items?</a></li>
+            <li><a href="#removeitem">Removing Items</a></li>
+            <li><a href="#clear">Clearing the Inventory</a></li>
+        </ul>
+
+        <h2 class="header" id="location">Where Do I Remove Items?</h2>
+        <p>In the items view, the checkboxes next to items in the table act as selectors for removal. After selecting items for removal, the side menu on the left as a section titled, "Item Controls", which contains the buttons "Delete Selected Items" and "Clear All Items".</p>
+        
+        <h2 class="header" id="removeitem">Adding the Item</h2>
+        <p>In the leftmost column of the table, there is a checkbox for each item in the inventory. By clicking on this checkbox, the corresponding item is "selected". After the user selects all the items they wish to remove, clicking the "Delete Selected Items" button in the side menu will cause a popup to appear, verifying if the user wishes to delete the items they selected. If the user clicks "Yes", the selected items will be removed from the inventory and the table.</p>
+        <p>Note that any and all removed items cannot be retrieved once removed. Removing items from the inventory is a permanent action, and in order to retrieve removed items, the user must either load a previously exported inventory or input new items. To prevent a user from removing items by accident, the popup is there to ensure that the user wishes to remove the selected items.</p>
+
+        <h2 class="header" id="clear">Clearing the Inventory</h2>
+        <p>If the user wishes to remove all items from their inventory, there is a button labeled, "Clear All Items" under the "Item Controls" section of the side menu. Clicking this button will result in a popup verifying that the user wishes to remove all items from the inventory. Upon clicking "yes" the inventory will be cleared, and the table will show "No content in table", as there are no items to show.</p>
+        <p>Just like removing items, clearing all items is irreversible, and as such, the user should export their inventory if they have doubts about clearing it.</p>
+    </body>
+</html>

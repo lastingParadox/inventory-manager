@@ -25,12 +25,12 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem mnemonicParsing="false" text="Import" />
+                  <MenuItem mnemonicParsing="false" onAction="#importButtonClicked" text="Import" />
                   <Menu mnemonicParsing="false" text="Export">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Text" />
-                        <MenuItem mnemonicParsing="false" text="HTML" />
-                        <MenuItem mnemonicParsing="false" text="JSON" />
+                      <MenuItem mnemonicParsing="false" onAction="#exportTextButtonClicked" text="Text" />
+                        <MenuItem mnemonicParsing="false" onAction="#exportHTMLButtonClicked" text="HTML" />
+                        <MenuItem mnemonicParsing="false" onAction="#exportJSONButtonClicked" text="JSON" />
                     </items>
                   </Menu>
               <MenuItem mnemonicParsing="false" text="Close" />

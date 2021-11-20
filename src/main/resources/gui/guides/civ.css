@@ -1,0 +1,17 @@
+#topheader {
+    margin-left: auto;
+    margin-right: auto;
+    width: 700px;
+    background-image: url("Untitled.png");
+    background-repeat: no-repeat;
+    box-shadow: 0 0 3px 3px white inset;
+    background-position: center;
+}
+
+.topheader {
+    text-align: center;
+}
+
+.header {
+    text-align: center;
+}
