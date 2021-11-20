@@ -31,6 +31,7 @@ public class InventoryManagementApplication extends javafx.application.Applicati
 
     public static void main(String[] args) {
         Font.loadFont(InventoryManagementApplication.class.getResourceAsStream("Penumbra-HalfSerif-Std.ttf"), 16);
+        Font.loadFont(InventoryManagementApplication.class.getResourceAsStream("NotoSans-Regular.ttf"), 16);
         launch(args);
     }
 

@@ -42,6 +42,7 @@ public class InventoryManagementApplicationController {
     @FXML private VBox itemsView;
     @FXML private TableColumn<Item, String> nameColumn;
     @FXML private TextField nameField;
+    @FXML private Label nameLengthCounter;
     @FXML private TextField searchField;
     @FXML private TableColumn<Item, Boolean> selectedColumn;
     @FXML private TableColumn<Item, String> serialColumn;
@@ -82,7 +83,7 @@ public class InventoryManagementApplicationController {
         }
 
         inventory.addItem(nameField.getText(), valueField.getText(), serialField.getText());
-        itemTable.refresh();
+        refreshTable();
     }
 
     @FXML
@@ -97,7 +98,7 @@ public class InventoryManagementApplicationController {
             if (type == yes)
                 inventory.clear();
         });
-        itemTable.refresh();
+        refreshTable();
     }
 
     @FXML
@@ -133,7 +134,7 @@ public class InventoryManagementApplicationController {
             if (type == yes)
                 inventory.removeItems(removedItems);
         });
-        itemTable.refresh();
+        refreshTable();
     }
 
     @FXML
@@ -150,7 +151,7 @@ public class InventoryManagementApplicationController {
         controller.setItem(itemTable.getSelectionModel().getSelectedItem());
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("edit.css")).toExternalForm());
         stage.setScene(scene);
         stage.setTitle(String.format("Edit %s", controller.getItem().getName()));
         stage.show();
@@ -215,6 +216,10 @@ public class InventoryManagementApplicationController {
         selectAllBox.setSelected(false);
         toolAccordion.setExpandedPane(itemTitledPane);
 
+        homeView.setVisible(false);
+        itemsView.setVisible(true);
+        refreshTable();
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText("Inventory successfully imported!");
         alert.show();
@@ -260,8 +265,10 @@ public class InventoryManagementApplicationController {
         toolAccordion.setExpandedPane(fileTitledPane);
 
         //Ensures that the correct menu displays upon initializing the program
-        homeView.setVisible(false);
-        itemsView.setVisible(true);
+        homeView.setVisible(true);
+        itemsView.setVisible(false);
+
+        nameField.textProperty().addListener(((observable, oldValue, newValue) -> nameLengthCounter.setText(String.format("Name Length: %d characters", nameField.getText().length()))));
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             FilteredList<Item> filteredList = new FilteredList<>(FXCollections.observableArrayList(inventory.getObservableList()));
@@ -269,6 +276,7 @@ public class InventoryManagementApplicationController {
             SortedList<Item> sortedList = new SortedList<>(filteredList);
             sortedList.comparatorProperty().bind(itemTable.comparatorProperty());
             itemTable.setItems(sortedList);
+            refreshTable();
         });
     }
 
@@ -300,6 +308,7 @@ public class InventoryManagementApplicationController {
     public void initializeSelectedColumn() {
         selectAllBox.setUserData(selectedColumn);
         selectedColumn.setGraphic(selectAllBox);
+        selectedColumn.setEditable(true);
 
         selectedColumn.setCellValueFactory(param -> param.getValue().getSelected());
         selectedColumn.setCellFactory(column -> new CheckBoxTableCell<>());
@@ -323,7 +332,7 @@ public class InventoryManagementApplicationController {
                             setStyle("");
                         } else {
                             Text text = new Text(item);
-                            text.setStyle("-fx-text-alignment:center;");
+                            text.setStyle("-fx-text-alignment:center;-fx-fill:#C6CEF4;");
                             text.wrappingWidthProperty().bind(getTableColumn().widthProperty().subtract(10));
                             setGraphic(text);
                         }
@@ -362,7 +371,7 @@ public class InventoryManagementApplicationController {
         controller.setItem(rowItem);
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("edit.css")).toExternalForm());
         stage.setScene(scene);
         stage.setTitle(String.format("Edit %s", controller.getItem().getName()));
         stage.show();

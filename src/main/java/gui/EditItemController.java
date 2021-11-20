@@ -8,7 +8,6 @@ package gui;
 import data.Item;
 import data.ItemList;
 import helper.Validator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -39,7 +38,7 @@ public class EditItemController {
     private InventoryManagementApplicationController inventoryController = null;
 
     @FXML
-    void deleteItemButtonClicked(ActionEvent event) {
+    void deleteItemButtonClicked() {
         if (item == null)
             return;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -97,7 +96,7 @@ public class EditItemController {
     }
 
     @FXML
-    void onNameFieldFill(ActionEvent event) {
+    void onNameFieldFill() {
         if (validator.verifyName(nameField.getText()) == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid Name");
@@ -107,7 +106,7 @@ public class EditItemController {
     }
 
     @FXML
-    void onSerialFieldFill(ActionEvent event) {
+    void onSerialFieldFill() {
         if (validator.verifySerial(serialField.getText()) == null || validator.verifyUnique(serialField.getText(), inventory.getObservableList()) == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid Serial Number");
@@ -117,7 +116,7 @@ public class EditItemController {
     }
 
     @FXML
-    void onValueFieldFill(ActionEvent event) {
+    void onValueFieldFill() {
         if (validator.verifyValue(valueField.getText()) == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid Value");
@@ -135,10 +134,6 @@ public class EditItemController {
             }
         }));
 
-    }
-
-    public ItemList getItemList() {
-        return inventory;
     }
 
     public Item getItem() {

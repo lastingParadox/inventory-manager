@@ -1,22 +1,138 @@
-.titled-pane > .content > * {
-    -fx-padding: 0px;
+* {
+    -fx-text-color: #C6CEF4;
 }
 
-.searchButton {
-    -fx-background-color: purple;
-    -fx-shape: "M495.04,404.48L410.56,320c15.36-30.72,25.6-66.56,25.6-102.4C436.16,97.28,338.88,0,218.56,0S0.96,97.28,0.96,217.6 s97.28,217.6,217.6,217.6c35.84,0,71.68-10.24,102.4-25.6l84.48,84.48c25.6,25.6,64,25.6,89.6,0 C518.08,468.48,518.08,430.08,495.04,404.48z M218.56,384c-92.16,0-166.4-74.24-166.4-166.4S126.4,51.2,218.56,51.2 s166.4,74.24,166.4,166.4S310.72,384,218.56,384z";
+.label {
+    -fx-text-fill: -fx-text-color;
+}
+
+.border-pane {
+    -fx-background-color: #2A5581;
+}
+
+/* Titled Pane Styling */
+.titled-pane > .content > * {
+    -fx-padding: 0px;
+    -fx-border-color: transparent;
+}
+
+.titled-pane > *.content {
+    -fx-border-width: 0px;
+}
+
+.accordion {
+    -fx-border-color: transparent;
+}
+
+.titled-pane {
+    -fx-text-fill: -fx-text-color;
+}
+
+.titled-pane > .title {
+    -fx-background-color: #366897;
+    -fx-font-family: "Noto Sans";
+    -fx-font-weight: 900;
+}
+
+/* Table Styling */
+.table-view {
+    -fx-background-color: #072A46;
+    -fx-border-width: 1px;
+    -fx-border-color: #0C3E4F;
+    -fx-text-alignment: center;
+}
+
+.table-view .column-header,
+.table-view .column-header .filler {
+    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, #062741, #0F4066);
+    -fx-border-color: #04192A;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: #072A46;
+    -fx-padding: 1em;
 }
 
 .table-view .table-column {
     -fx-alignment: center;
 }
 
-.title {
+.table-view .table-cell {
+    -fx-font-size: 14px;
+    -fx-text-fill: -fx-text-color;
+    -fx-border-color: transparent;
+    -fx-border-style: solid none none none;
+    -fx-alignment: center;
+}
+
+.table-row-cell {
+    -fx-background-color: #0B3E6B;
+    -fx-text-fill: -fx-text-color;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #0D3152;
+}
+
+.scroll-bar:horizontal .increment-arrow,
+.scroll-bar:horizontal .decrement-arrow,
+.scroll-bar:horizontal .increment-button,
+.scroll-bar:horizontal .decrement-button {
+    -fx-padding: 0;
+}
+
+/* Checkbox Styling */
+.check-box .box {
+    -fx-background-color: transparent;
+    -fx-border-color: #DFB674;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #DFB674;
+}
+
+.check-box:hover {
+    -fx-border-color: transparent;
+    -fx-background-color: #224763;
+}
+
+/* Search Bar Styling */
+.text-field {
+    -fx-background-color: #072A46;
+    -fx-text-fill: -fx-text-color;
+}
+
+#sideMenu {
+    -fx-background-color: #2A5581;
+}
+
+/*.searchButton {
+    -fx-background-color: purple;
+    -fx-shape: "M495.04,404.48L410.56,320c15.36-30.72,25.6-66.56,25.6-102.4C436.16,97.28,338.88,0,218.56,0S0.96,97.28,0.96,217.6 s97.28,217.6,217.6,217.6c35.84,0,71.68-10.24,102.4-25.6l84.48,84.48c25.6,25.6,64,25.6,89.6,0 C518.08,468.48,518.08,430.08,495.04,404.48z M218.56,384c-92.16,0-166.4-74.24-166.4-166.4S126.4,51.2,218.56,51.2 s166.4,74.24,166.4,166.4S310.72,384,218.56,384z";
+}*/
+
+.mainTitle {
     -fx-font-family: "Penumbra HalfSerif Std";
     -fx-text-alignment: center;
     -fx-alignment: center;
     -fx-margin: 0px;
     -fx-text-fill: white;
+}
+
+#controls-border {
+    -fx-image: url("control-separator.png");
+    -fx-padding: 0px;
+}
+
+#file-border {
+    -fx-image: url("file-separator.png");
+    -fx-padding: 0px;
+}
+
+#testingLine {
+
 }
 
 #bigTitle {
@@ -26,6 +142,29 @@
 #homeView {
     -fx-background-image: url("world-map.jpg");
     -fx-background-size: 120% 100%;
+}
+
+.itemBox {
+    -fx-background-color: #2A5581;
+}
+
+.button {
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #5A8BBE;
+    -fx-background-color: rgba(33,73,119,0.5);
+    -fx-text-fill: -fx-text-color;
+    -fx-font-family: "Noto Sans";
+    -fx-border-width: 2px;
+    -fx-background-insets: 0;
+}
+
+.button:hover {
+    -fx-background-color: #2F69A8;
+}
+
+#itemsButton:focused {
+    -fx-border-width: 1px;
 }
 
 .searchButton:focused {

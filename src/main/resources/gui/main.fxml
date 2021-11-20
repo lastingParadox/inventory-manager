@@ -12,13 +12,14 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.InventoryManagementApplicationController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" styleClass="border-pane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.InventoryManagementApplicationController">
    <top>
       <MenuBar nodeOrientation="LEFT_TO_RIGHT" BorderPane.alignment="CENTER">
         <menus>
@@ -44,7 +45,7 @@
       </MenuBar>
    </top>
    <left>
-      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="475.0" prefWidth="200.0" spacing="5.0" BorderPane.alignment="CENTER">
+      <VBox id="sideMenu" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="475.0" prefWidth="200.0" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#homeButtonClicked" prefHeight="34.0" prefWidth="193.0" text="Home">
                <VBox.margin>
@@ -57,47 +58,68 @@
             <Label text="Tools" />
             <Accordion fx:id="toolAccordion" maxHeight="1.7976931348623157E308">
               <panes>
-                <TitledPane fx:id="fileTitledPane" animated="false" text="Import and Export">
+                  <TitledPane fx:id="fileTitledPane" animated="false" text="Import and Export">
                      <content>
-                        <VBox alignment="TOP_CENTER" prefHeight="92.0" prefWidth="198.0" spacing="5.0">
+                        <HBox prefHeight="155.0" prefWidth="200.0" styleClass="itemBox">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#importButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Import Items">
-                                 <VBox.margin>
-                                    <Insets top="5.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" onAction="#exportTextButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Export as Text (TSV)">
-                                 <VBox.margin>
-                                    <Insets top="5.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" onAction="#exportHTMLButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Export as HTML" />
-                              <Button mnemonicParsing="false" onAction="#exportJSONButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Export as JSON">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </Button>
+                              <ImageView id="file-border" fitHeight="155.0" fitWidth="9.0" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin></ImageView>
+                              <VBox alignment="CENTER" prefHeight="133.0" prefWidth="198.0" spacing="5.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#importButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Import Items">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#exportTextButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Export as Text (TSV)">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#exportHTMLButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Export as HTML" />
+                                    <Button mnemonicParsing="false" onAction="#exportJSONButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Export as JSON">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
                            </children>
-                        </VBox>
+                        </HBox>
                      </content>
-                </TitledPane>
+                  </TitledPane>
                   <TitledPane fx:id="itemTitledPane" animated="false" text="Item Controls">
                      <content>
-                        <VBox alignment="TOP_CENTER" prefHeight="92.0" prefWidth="198.0" spacing="5.0">
+                        <HBox prefHeight="100.0" prefWidth="200.0" styleClass="itemBox">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#editItemButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Edit Highlighted Item" />
-                              <Button mnemonicParsing="false" onAction="#deleteItemButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Delete Selected Items">
-                                 <VBox.margin>
-                                    <Insets top="5.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" onAction="#clearItemButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Clear All Items">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" />
-                                 </VBox.margin>
-                              </Button>
+                              <ImageView id="controls-border" fitHeight="125.0" fitWidth="9.0" pickOnBounds="true" preserveRatio="true">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </ImageView>
+                              <VBox alignment="CENTER" prefHeight="125.0" prefWidth="198.0" spacing="5.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#editItemButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Edit Highlighted Item">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#deleteItemButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Delete Selected Items">
+                                       <VBox.margin>
+                                          <Insets top="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#clearItemButtonClicked" prefHeight="25.0" prefWidth="200.0" text="Clear All Items">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
                            </children>
-                        </VBox>
+                        </HBox>
                      </content>
                   </TitledPane>
               </panes>
@@ -108,10 +130,10 @@
    <center>
       <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox id="homeView" fx:id="homeView" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+            <VBox id="homeView" fx:id="homeView" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" visible="false">
                <children>
-                  <Label id="author" styleClass="title" text="Zander Preston's" />
-                  <Label id="bigTitle" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="478.0" prefHeight="73.0" prefWidth="478.0" styleClass="title" text="Inventory Manager" textAlignment="CENTER">
+                  <Label id="author" styleClass="mainTitle" text="Zander Preston's" />
+                  <Label id="bigTitle" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="478.0" prefHeight="73.0" prefWidth="478.0" styleClass="mainTitle" text="Inventory Manager" textAlignment="CENTER">
                      <font>
                         <Font size="40.0" />
                      </font>
@@ -119,42 +141,45 @@
                   <Label />
                   <HBox alignment="CENTER" prefHeight="21.0" prefWidth="595.0" spacing="20.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#itemsButtonClicked" prefHeight="24.0" prefWidth="135.0" text="Items" />
+                        <Button id="itemsButton" mnemonicParsing="false" onAction="#itemsButtonClicked" prefHeight="24.0" prefWidth="135.0" text="Items" />
                      </children>
                   </HBox>
                </children>
             </VBox>
-            <VBox fx:id="itemsView" prefHeight="200.0" prefWidth="100.0" visible="false">
+            <VBox fx:id="itemsView" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <HBox prefHeight="25.0" prefWidth="602.0">
+                  <HBox maxWidth="1.7976931348623157E308" prefHeight="25.0">
                      <children>
-                        <Label prefHeight="25.0" prefWidth="50.0" text="Search:">
+                        <Label prefHeight="25.0" prefWidth="49.0" text="Search:">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="searchButton">
+                        <Button mnemonicParsing="false" prefHeight="25.0" styleClass="searchButton">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
                         </Button>
                         <TextField fx:id="searchField" prefHeight="25.0" prefWidth="478.0" />
-                        <Button mnemonicParsing="false" onAction="#clearSearchButtonClicked" prefHeight="25.0" prefWidth="0.0" text="Button" />
+                        <Button mnemonicParsing="false" onAction="#clearSearchButtonClicked" prefHeight="25.0" />
                      </children>
                      <VBox.margin>
                         <Insets right="10.0" top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <TableView fx:id="itemTable" editable="true" prefHeight="387.0" prefWidth="602.0">
+                  <TableView fx:id="itemTable" editable="true" prefHeight="387.0" prefWidth="602.0" VBox.vgrow="ALWAYS">
                     <columns>
-                      <TableColumn fx:id="selectedColumn" prefWidth="28.0" sortable="false" />
-                      <TableColumn fx:id="nameColumn" editable="false" maxWidth="1.7976931348623157E308" prefWidth="302.0" sortable="false" text="Name" />
-                        <TableColumn fx:id="valueColumn" editable="false" minWidth="0.0" prefWidth="131.0" sortable="false" text="Value" />
-                        <TableColumn fx:id="serialColumn" editable="false" prefWidth="123.0" sortable="false" text="Serial Number" />
+                      <TableColumn fx:id="selectedColumn" maxWidth="28.0" minWidth="28.0" prefWidth="28.0" sortable="false" />
+                      <TableColumn fx:id="nameColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" sortable="false" text="Name" />
+                        <TableColumn fx:id="valueColumn" editable="false" maxWidth="131.0" minWidth="131.0" prefWidth="131.0" sortable="false" text="Value" />
+                        <TableColumn fx:id="serialColumn" editable="false" maxWidth="121.0" minWidth="121.0" prefWidth="121.0" sortable="false" text="Serial Number" />
                     </columns>
                      <VBox.margin>
                         <Insets right="10.0" top="10.0" />
                      </VBox.margin>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                   </TableView>
                   <HBox prefHeight="28.0" prefWidth="602.0" spacing="10.0">
                      <children>
@@ -171,10 +196,10 @@
                         <Label text="Create New Item:" />
                         <HBox prefHeight="29.0" prefWidth="595.0" spacing="10.0">
                            <children>
-                              <TextField fx:id="nameField" prefHeight="25.0" prefWidth="190.0" promptText="Item Name" HBox.hgrow="ALWAYS" />
-                              <TextField fx:id="valueField" promptText="Item Value" />
+                              <TextField fx:id="nameField" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="190.0" promptText="Item Name" />
+                              <TextField fx:id="valueField" prefHeight="25.0" prefWidth="133.0" promptText="Item Value" />
                               <TextField fx:id="serialField" promptText="Serial Number" />
-                              <Button mnemonicParsing="false" onAction="#addItemButtonClicked" text="Add Item" />
+                              <Button mnemonicParsing="false" onAction="#addItemButtonClicked" prefHeight="25.0" prefWidth="83.0" text="Add Item" />
                            </children>
                            <VBox.margin>
                               <Insets right="10.0" />
@@ -182,11 +207,11 @@
                         </HBox>
                         <HBox prefHeight="17.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                            <children>
-                              <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="191.0" text="Name Length: 0 characters" HBox.hgrow="ALWAYS">
+                              <Label fx:id="nameLengthCounter" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="191.0" text="Name Length: 0 characters">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin></Label>
-                              <Label prefHeight="17.0" prefWidth="149.0" text="Value must be ≥ 0.00">
+                              <Label prefHeight="17.0" prefWidth="132.0" text="Value must be ≥ 0.00">
                                  <HBox.margin>
                                     <Insets left="10.0" />
                                  </HBox.margin>
@@ -198,7 +223,7 @@
                               </Label>
                            </children>
                            <VBox.margin>
-                              <Insets top="5.0" />
+                              <Insets />
                            </VBox.margin>
                         </HBox>
                      </children>

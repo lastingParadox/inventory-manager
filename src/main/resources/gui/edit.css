@@ -1,0 +1,31 @@
+* {
+    -fx-text-color: #C6CEF4;
+}
+
+.border-pane {
+    -fx-background-color: #2A5581;
+}
+
+.label {
+    -fx-text-fill: -fx-text-color;
+}
+
+.text-field {
+    -fx-background-color: #072A46;
+    -fx-text-fill: -fx-text-color;
+}
+
+.button {
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #5A8BBE;
+    -fx-background-color: rgba(33,73,119,0.5);
+    -fx-text-fill: -fx-text-color;
+    -fx-font-family: "Noto Sans";
+    -fx-border-width: 2px;
+    -fx-background-insets: 0;
+}
+
+.button:hover {
+    -fx-background-color: #2F69A8;
+}
