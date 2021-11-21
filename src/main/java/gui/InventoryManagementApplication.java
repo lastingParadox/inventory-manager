@@ -8,6 +8,7 @@ package gui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -24,6 +25,7 @@ public class InventoryManagementApplication extends javafx.application.Applicati
         stage.setTitle("Inventory Manager");
         stage.setScene(scene);
         stage.sizeToScene();
+        stage.getIcons().add(new Image("gui/images/appicon.png"));
         stage.show();
         stage.setMinWidth(stage.getWidth());
         stage.setMinHeight(stage.getHeight());

@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
@@ -54,6 +55,7 @@ public class InventoryManagementApplicationController {
     private final CheckBox selectAllBox = new CheckBox();
     private final ItemList inventory = new ItemList();
     private final Validator validator = new Validator();
+    private static final String APPICON = "gui/images/appicon.png";
     private int sortNameCheck = 0;
     private int sortValueCheck = 0;
     private int sortSerialCheck = 0;
@@ -71,6 +73,7 @@ public class InventoryManagementApplicationController {
         stage.setTitle("About");
         stage.setMinWidth(1000);
         stage.setMinHeight(stage.getHeight());
+        stage.getIcons().add(new Image(APPICON));
         stage.show();
     }
 
@@ -193,6 +196,7 @@ public class InventoryManagementApplicationController {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/edit.css")).toExternalForm());
         stage.setScene(scene);
         stage.setTitle(String.format("Edit %s", controller.getItem().getName()));
+        stage.getIcons().add(new Image(APPICON));
         stage.show();
     }
 
@@ -344,6 +348,7 @@ public class InventoryManagementApplicationController {
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/main.css")).toExternalForm());
         stage.setScene(scene);
         stage.setTitle(String.format("Edit %s", controller.getItem().getName()));
+        stage.getIcons().add(new Image(APPICON));
         stage.show();
     }
 
