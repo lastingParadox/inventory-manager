@@ -59,12 +59,12 @@ public class ItemList {
 
     public void sortBySerial() {
         //Sorts the list by serial in alphabetical order.
-        items.sort((o1, o2) -> Integer.compare(0, o1.getSerial().compareToIgnoreCase(o2.getSerial())));
+        items.sort((o1, o2) -> Integer.compare(o1.getSerial().compareToIgnoreCase(o2.getSerial()), 0));
     }
 
     public void inverseSortBySerial() {
         //Sorts the list by serial in reverse alphabetical order.
-        items.sort((o1, o2) -> Integer.compare(o1.getSerial().compareToIgnoreCase(o2.getSerial()), 0));
+        items.sort((o1, o2) -> Integer.compare(0, o1.getSerial().compareToIgnoreCase(o2.getSerial())));
     }
 
     //Filter Stuff

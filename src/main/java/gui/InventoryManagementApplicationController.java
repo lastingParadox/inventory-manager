@@ -93,7 +93,7 @@ public class InventoryManagementApplicationController {
             error.append(String.format("An item's serial number must be unique.%n"));
         }
         if (validator.verifyValue(valueField.getText()) == null) {
-            error.append("An item's value is required and must a number greater than $0.00.");
+            error.append("An item's value is required and must be a number greater than $0.00.");
         }
 
         //If there's an error, creates an alert popup containing all the errors and returns
@@ -276,6 +276,7 @@ public class InventoryManagementApplicationController {
         else
             inventory.inverseSortByName();
         sortNameCheck++;
+        refreshTable();
     }
 
     @FXML
@@ -286,6 +287,7 @@ public class InventoryManagementApplicationController {
         else
             inventory.inverseSortBySerial();
         sortSerialCheck++;
+        refreshTable();
     }
 
     @FXML
@@ -296,6 +298,7 @@ public class InventoryManagementApplicationController {
         else
             inventory.inverseSortByValue();
         sortValueCheck++;
+        refreshTable();
     }
 
     @FXML
