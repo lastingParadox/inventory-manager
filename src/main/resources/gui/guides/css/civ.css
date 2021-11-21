@@ -1,0 +1,65 @@
+@font-face {
+    font-family: "Penumbra";
+    src: url("/fonts/Penumbra-HalfSerif-Std.ttf");
+}
+
+@font-face {
+    font-family: "NotoSans";
+    src: url("/fonts/NotoSans-Regular.ttf");
+}
+
+body {
+    background-image: url("/images/background.jpg");
+    font-family: "Penumbra";
+    color: #332F27;
+}
+
+h1 {
+    text-shadow: 3px 3px rgba(218, 207, 195, 0.5);
+}
+
+p {
+    font-family: "NotoSans";
+}
+
+a {
+    color: #332F27;
+    font-family: "NotoSans";
+    text-decoration: none;
+}
+
+a:hover {
+    color: #635441;
+}
+
+hr {
+    width: 75%;
+    border: 1px solid;
+    color: #332F27;
+}
+
+#topheader {
+    margin-left: auto;
+    margin-right: auto;
+    width: 750px;
+    height: 75px;
+    background-image: url("/images/topHeader.png");
+    background-repeat: no-repeat;
+    box-shadow: 0 0 3px 3px #B09F8B inset;
+    background-position: center;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.topheader {
+    text-align: center;
+    vertical-align: middle;
+    line-height: 75px;
+}
+
+.header {
+    text-align: center;
+}

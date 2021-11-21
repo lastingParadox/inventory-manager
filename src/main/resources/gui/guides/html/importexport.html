@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Importing and Exporting the Inventory</title>
+        <link rel="stylesheet" href="/css/civ.css">
+    </head>
+    <body>
+        <div id="topheader">
+            <h1 class="topheader">Importing and Exporting the Inventory</h1>
+        </div>
+        
+        <h2 class="header">Introduction</h2>
+        <p>In order to be able to use an inventory after closing the program, the user must export their inventory, and import it when using Inventory Manager later. Luckily, exporting and importing an inventory is a simple task.</p>
+        <ul>
+            <li><a href="#location">Where Do I Export and Import?</a></li>
+            <li><a href="#importitems">Importing an Inventory</a></li>
+            <li><a href="#exportitems">Exporting an Inventory</a></li>
+            <ul>
+                <li><a href="#exporttext">Export as Text</a></li>
+                <li><a href="#exporthtml">Export as HTML</a></li>
+                <li><a href="#exportjson">Export as JSON</a></li>
+            </ul>
+        </ul>
+        <hr>
+        
+        <h2 class="header" id="location">Where Do I Export and Import?</h2>
+        <p>In the side menu, there is a section titled "Import and Export", which contains four buttons: "Import Items", "Export as Text (TSV)", "Export As HTML", and "Export as JSON". In addition, the menu at the top contains the "File" menu option, which can be used to import or export. Each of these buttons are used in either loading the inventory to the table or saving the inventory to an external file in a variety of formats.</p>
+        <hr>
+
+        <h2 class="header" id="importitems">Importing an Inventory</h2>
+        <p>Providing the user has previously exported an inventory, clicking the "Import" button will result in a window appearing to select a file. Any inventory file can be chosen, or any text, html, or json file. However, in order for the file to be processed correctly in the table, the file chosen should have been previously created by the Inventory Manager program. With a successful import, the application will show a confirmation message, and the items in the file that was imported will populate the table for manipulation.</p>
+        <hr>
+
+        <h2 class="header" id="exportitems">Exporting an Inventory</h2>
+        <p>After the user has an inventory created, they can export their inventory as either a text file, a HTML file, or a JSON file. For each of these methods, the user will be prompted with a window to choose the location of the inventory file and its name. After clicking "Save", the file will be created, and a confirmation window will appear, mentioning that the file was successfully exported.</p>
+        <hr>
+
+        <h3 class="header" id="exporttext">Export as Text</h3>
+        <p>If the user wishes to save their inventory as a text file, the program will write the data in the inventory in a TSV format. This text file can be used in other applications that can read tab-separated values, such as Microsoft Excel.</p>
+        <hr>
+
+        <h3 class="header" id="exporthtml">Export as HTML</h3>
+        <p>If the user wishes to save their inventory as a HTML file, the program will write the data in the inventory in a table in an HTML format. The table created will look similar to the table below, and can be used in other HTML-related applications, particularly websites.</p>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Serial Number</th>
+            </tr>
+            <tr>
+                <td>Example Item 1</td>
+                <td>100.00</td>
+                <td>A-AAA-AAA-AAA</td>
+            </tr>
+            <tr>
+                <td>Example Item 2</td>
+                <td>200.00</td>
+                <td>B-BBB-BBB-BBB</td>
+            </tr>
+        </table>
+        <hr>
+
+        <h3 class="header" id="exportjson">Export as JSON</h3>
+        <p>If the user wishes to save their inventory as a JSON file, the program will write the inventory in a JSON format. The JSON file can be used in applications that read in JSON files, particularly Javascript.</p>
+    </body>
+</html>

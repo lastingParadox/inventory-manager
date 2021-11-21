@@ -4,6 +4,7 @@
 
 .label {
     -fx-text-fill: -fx-text-color;
+    -fx-font-family: "Noto Sans";
 }
 
 .border-pane {
@@ -110,14 +111,29 @@
     -fx-text-fill: -fx-text-color;
 }
 
+.menu-bar {
+    -fx-background-color: linear-gradient(from 50% 0% to 50% 100%, #062741, #0F4066);
+    -fx-border-color: #0C3E4F;
+}
+
+.menu-bar>.container>.menu-button:hover,
+.menu-bar>.container>.menu-button:focused,
+.menu-bar>.container>.menu-button:showing {
+    -fx-background-color: #0F4066;
+}
+
+.context-menu {
+    -fx-background-color: #072A46;
+}
+
+.menu-item:focused,
+.menu-item:hover {
+    -fx-background-color: #0F4066;
+}
+
 #sideMenu {
     -fx-background-color: #2A5581;
 }
-
-/*.searchButton {
-    -fx-background-color: purple;
-    -fx-shape: "M495.04,404.48L410.56,320c15.36-30.72,25.6-66.56,25.6-102.4C436.16,97.28,338.88,0,218.56,0S0.96,97.28,0.96,217.6 s97.28,217.6,217.6,217.6c35.84,0,71.68-10.24,102.4-25.6l84.48,84.48c25.6,25.6,64,25.6,89.6,0 C518.08,468.48,518.08,430.08,495.04,404.48z M218.56,384c-92.16,0-166.4-74.24-166.4-166.4S126.4,51.2,218.56,51.2 s166.4,74.24,166.4,166.4S310.72,384,218.56,384z";
-}*/
 
 .mainTitle {
     -fx-font-family: "Penumbra HalfSerif Std";
@@ -127,13 +143,17 @@
     -fx-text-fill: white;
 }
 
+#menu-border {
+    -fx-image: url("/gui/images/sideways-separator.png");
+}
+
 #controls-border {
-    -fx-image: url("control-separator.png");
+    -fx-image: url("/gui/images/control-separator.png");
     -fx-padding: 0px;
 }
 
 #file-border {
-    -fx-image: url("file-separator.png");
+    -fx-image: url("/gui/images/file-separator.png");
     -fx-padding: 0px;
 }
 
@@ -146,7 +166,7 @@
 }
 
 #homeView {
-    -fx-background-image: url("world-map.jpg");
+    -fx-background-image: url("/gui/images/world-map.jpg");
     -fx-background-size: 120% 100%;
 }
 

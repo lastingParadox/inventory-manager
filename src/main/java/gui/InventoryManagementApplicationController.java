@@ -59,6 +59,22 @@ public class InventoryManagementApplicationController {
     private int sortSerialCheck = 0;
 
     @FXML
+    void aboutButtonClicked() throws IOException {
+        //Creates a new window for the about menu and shows it to the user.
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/about.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/main.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.setTitle("About");
+        stage.setMinWidth(1000);
+        stage.setMinHeight(stage.getHeight());
+        stage.show();
+    }
+
+    @FXML
     void addItemButtonClicked() {
         //Verifies item fields for any input errors and adds the item if there are no invalidations.
 
@@ -157,7 +173,7 @@ public class InventoryManagementApplicationController {
         //After this button is clicked, The highlighted item is retrieved and sent to the edit item stage.
         if (itemTable.getSelectionModel().getSelectedItem() == null)
             return;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("edit.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/edit.fxml"));
         Parent root = loader.load();
 
         //Setting the controller's item attributes
@@ -168,7 +184,7 @@ public class InventoryManagementApplicationController {
         controller.setItem(itemTable.getSelectionModel().getSelectedItem());
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("edit.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/edit.css")).toExternalForm());
         stage.setScene(scene);
         stage.setTitle(String.format("Edit %s", controller.getItem().getName()));
         stage.show();
@@ -309,7 +325,7 @@ public class InventoryManagementApplicationController {
     }
 
     private void editItemRowClicked(Item rowItem) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("edit.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/edit.fxml"));
         Parent root = loader.load();
 
         Stage stage = new Stage();
@@ -319,7 +335,7 @@ public class InventoryManagementApplicationController {
         controller.setItem(rowItem);
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("edit.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/main.css")).toExternalForm());
         stage.setScene(scene);
         stage.setTitle(String.format("Edit %s", controller.getItem().getName()));
         stage.show();

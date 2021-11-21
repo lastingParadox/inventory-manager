@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Adding Items</title>
-        <link rel="stylesheet" href="civ.css">
+        <link rel="stylesheet" href="/css/civ.css">
     </head>
     <body>
         <div id="topheader">
@@ -21,21 +21,26 @@
             <li><a href="#additem">Adding the Item</a></li>
         </ul>
 
+        <hr>
         <h2 class="header" id="location">Where Do I Add an Item?</h2>
         <p>In the items view, a user can find the ability to add items underneath the sorting buttons beneath the table. In the section prefaced "Create New Item", there are three text fields, representing the item's name, value, and serial number, and a button labeled, "Add Item".</p>
 
+        <hr>
         <h3 class="header" id="name">Name</h3>
         <p>An item's name is used to denote the item, and is a mandatory field that must be filled to add the item to the inventory. All symbols are permitted within an item's name, however the item's name must be between 2 and 256 characters. If the user attempts to add an item with less than 2 characters, the application will produce a popup upon trying to add the item to the inventory, and the item will not be added.</p>
         <p>Note that upon trying to write an item's name past 256 characters will result in the field halting any text entry past 256 characters. The character limit counter beneath the field can be used to determine how many characters have been filled out in the name field.</p>
 
+        <hr>
         <h3 class="header" id="value">Value</h3>
         <p>An item's value is a mandatory field that represents the price, or the value, or the item in United States dollars. Only numerical values are permitted in an item's value field, and attempting to input a non-numerical value will result in an error popup appearing whenever the "Add Item" button is clicked.</p>
         <p>In addition, the value field of an item must be greater than or equal to 0. The value is purely numerical--entering the item's value with a dollar sign ($) will result in an error.</p>
 
+        <hr>
         <h3 class="header" id="serial">Serial Number</h2>
         <p>An item's serial number is also a mandatory field used as a unique moniker for the item. While multiple items may share the same name, serial numbers cannot be shared across items. The item's serial number must be entered in the format "A-XXX-XXX-XXX", where "A" represents a letter and "X" represents a letter or a digit. Attempting to enter a value in the serial field that does not match this format will result in an error popup appearing when clicking the "Add Item" button.</p> 
         <p>Attempting to enter a serial number that is identical to another item's serial number will also result in an error popup appearing. As previously mentioned, items' serial numbers are unique across an inventory.</p>
         
+        <hr>
         <h2 class="header" id="additem">Adding the Item</h2>
         <p>After all three item fields are filled, clicking the "Add Item" field will result in either a popup appearing denoting any validation errors in the field inputs or in the item being added to the table above. If a popup appears, the user must fix the text fields associated with the errors for the item to be shown in the table. Upon a successful addition, the text fields will be cleared, and the newly created item will be added to the inventory for later modification.</p>
     </body>

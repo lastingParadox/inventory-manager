@@ -17,10 +17,10 @@ public class InventoryManagementApplication extends javafx.application.Applicati
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxml/main.fxml")));
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("styles.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/main.css")).toExternalForm());
         stage.setTitle("Inventory Manager");
         stage.setScene(scene);
         stage.sizeToScene();
@@ -30,8 +30,8 @@ public class InventoryManagementApplication extends javafx.application.Applicati
     }
 
     public static void main(String[] args) {
-        Font.loadFont(InventoryManagementApplication.class.getResourceAsStream("Penumbra-HalfSerif-Std.ttf"), 16);
-        Font.loadFont(InventoryManagementApplication.class.getResourceAsStream("NotoSans-Regular.ttf"), 16);
+        Font.loadFont(InventoryManagementApplication.class.getResourceAsStream("fonts/Penumbra-HalfSerif-Std.ttf"), 16);
+        Font.loadFont(InventoryManagementApplication.class.getResourceAsStream("fonts/NotoSans-Regular.ttf"), 16);
         launch(args);
     }
 

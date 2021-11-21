@@ -7,7 +7,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -38,7 +37,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#aboutButtonClicked" text="About" />
             </items>
           </Menu>
         </menus>
@@ -54,7 +53,7 @@
             </Button>
             <Accordion />
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#itemsButtonClicked" prefHeight="34.0" prefWidth="193.0" text="Items" />
-            <Separator prefWidth="200.0" />
+            <ImageView id="menu-border" fitHeight="9.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
             <Label text="Tools" />
             <Accordion fx:id="toolAccordion" maxHeight="1.7976931348623157E308">
               <panes>
