@@ -6,6 +6,7 @@
 package data;
 
 public class Guide {
+
     private final String title;
     private final String localHtml;
 

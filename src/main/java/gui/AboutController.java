@@ -14,8 +14,7 @@ import java.util.Objects;
 
 public class AboutController {
 
-    @FXML
-    private ListView<Guide> guideList;
+    @FXML private ListView<Guide> guideList;
 
     @FXML private WebView guideView;
 
@@ -36,7 +35,7 @@ public class AboutController {
                     new Guide("Editing Items", "edititems.html"),
                     new Guide("Sorting and Filtering", "sortitems.html"),
                     new Guide("Searching", "searchitems.html"),
-                    new Guide("Importing and Exporting", "importExport.html"));
+                    new Guide("Importing and Exporting", "importexport.html"));
         guideList.fixedCellSizeProperty().set(25);
         guideList.setItems(list);
         engine = guideView.getEngine();
@@ -46,7 +45,7 @@ public class AboutController {
     }
 
     public void loadPage(String html) {
-        URL url = this.getClass().getResource("guides/" + html);
+        URL url = this.getClass().getResource("guides/html/" + html);
         engine.load(Objects.requireNonNull(url).toString());
     }
 

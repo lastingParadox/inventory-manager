@@ -1,0 +1,45 @@
+.border-pane {
+    -fx-background-color: #381014;
+}
+
+.label {
+    -fx-text-fill: #ecefff;
+}
+
+.list-view {
+    -fx-background-color: #381014;
+}
+
+.list-cell {
+    -fx-padding: 0.25em 0.7em 0.25em 0.7em;
+    -fx-background-color: #221D14;
+    -fx-border-color: #B6955E;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+    -fx-text-fill: #ACA799;
+}
+
+.list-cell:selected {
+    -fx-text-fill: #bbb9af;
+    -fx-background-color: #3E3629;
+}
+
+.menu-bar {
+    -fx-background-color: #2E1014;
+    -fx-border-color: #D3AF70;
+}
+
+.menu-bar>.container>.menu-button:hover,
+.menu-bar>.container>.menu-button:focused,
+.menu-bar>.container>.menu-button:showing {
+    -fx-background-color: #60212A;
+}
+
+.context-menu {
+    -fx-background-color: #2E1014;
+}
+
+.menu-item:focused,
+.menu-item:hover {
+    -fx-background-color: #60212A;
+}

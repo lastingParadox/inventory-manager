@@ -2,6 +2,14 @@
 
 package "data" {
 
+    class Guide {
+        -String title
+        -String localHtml
+
+        +String getLocalHtml()
+        +String toString()
+    }
+
     class Item {
         -SimpleBooleanProperty selected
         -String name
@@ -41,6 +49,21 @@ package "data" {
 }
 
 package "gui" {
+    class AboutController {
+        ..@FXML Variables..
+        -ListView<Guide> guideList
+        -WebView guideView
+        ..Other Variables..
+        -WebEngine engine
+        -ObservableList<Guide> list
+        --
+        ..@FXML Methods..
+        -void onCloseButtonClicked()
+        +void initialize()
+        ..Other Methods..
+        +void loadPage()
+    }
+
     class EditItemController {
         ..@FXML Variables..
         -Label nameCharCounter
@@ -97,9 +120,11 @@ package "gui" {
         -int sortSerialCheck
         --
         ..@FXML Methods..
+        void aboutButtonClicked()
         void addItemButtonClicked()
         void clearItemButtonClicked()
         void clearSearchButtonClicked()
+        void closeButtonClicked()
         void deleteItemButtonClicked()
         void editItemButtonClicked()
         void exportHTMLButtonClicked()
@@ -152,6 +177,7 @@ InventoryManagementApplicationController o-- ItemList
 InventoryManagementApplicationController o-- Validator
 EditItemController o-- Validator
 EditItemController o-- Item
+AboutController *-- Guide
 ItemList *-- Item
 
 note left of ItemList::items

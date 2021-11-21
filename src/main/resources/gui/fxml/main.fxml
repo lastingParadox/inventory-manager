@@ -32,7 +32,7 @@
                         <MenuItem mnemonicParsing="false" onAction="#exportJSONButtonClicked" text="JSON" />
                     </items>
                   </Menu>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" onAction="#closeButtonClicked" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -129,38 +129,56 @@
    <center>
       <StackPane prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox id="homeView" fx:id="homeView" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" visible="false">
+            <VBox id="homeView" fx:id="homeView" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label id="author" styleClass="mainTitle" text="Zander Preston's" />
+                  <Label id="author" styleClass="mainTitle" text="Zander Preston's">
+                     <VBox.margin>
+                        <Insets top="50.0" />
+                     </VBox.margin></Label>
                   <Label id="bigTitle" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="478.0" prefHeight="73.0" prefWidth="478.0" styleClass="mainTitle" text="Inventory Manager" textAlignment="CENTER">
                      <font>
                         <Font size="40.0" />
                      </font>
                   </Label>
                   <Label />
-                  <HBox alignment="CENTER" prefHeight="21.0" prefWidth="595.0" spacing="20.0">
+                  <HBox alignment="CENTER">
                      <children>
-                        <Button id="itemsButton" mnemonicParsing="false" onAction="#itemsButtonClicked" prefHeight="24.0" prefWidth="135.0" text="Items" />
+                        <ImageView id="home-border" fitHeight="125.0" fitWidth="9.0" pickOnBounds="true" preserveRatio="true" />
+                        <VBox alignment="CENTER" prefWidth="135.0" spacing="5.0">
+                           <children>
+                              <Button id="itemsButton" mnemonicParsing="false" onAction="#itemsButtonClicked" prefHeight="25.0" prefWidth="135.0" text="Items" />
+                              <Button mnemonicParsing="false" onAction="#aboutButtonClicked" prefHeight="25.0" prefWidth="135.0" text="Guide" />
+                              <Button mnemonicParsing="false" onAction="#closeButtonClicked" prefHeight="25.0" prefWidth="135.0" text="Close" />
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
                </children>
             </VBox>
-            <VBox fx:id="itemsView" prefHeight="200.0" prefWidth="100.0">
+            <VBox fx:id="itemsView" prefHeight="200.0" prefWidth="100.0" visible="false">
                <children>
                   <HBox maxWidth="1.7976931348623157E308" prefHeight="25.0">
                      <children>
-                        <Label prefHeight="25.0" prefWidth="49.0" text="Search:">
+                        <Label prefHeight="25.0" prefWidth="52.0" text="Search:">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Label>
-                        <Button mnemonicParsing="false" prefHeight="25.0" styleClass="searchButton">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </Button>
-                        <TextField fx:id="searchField" prefHeight="25.0" prefWidth="478.0" />
-                        <Button mnemonicParsing="false" onAction="#clearSearchButtonClicked" prefHeight="25.0" />
+                        <StackPane alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" minHeight="25.0" minWidth="535.0">
+                           <children>
+                              <TextField id="searchField" fx:id="searchField" maxWidth="1.7976931348623157E308" minWidth="535.0" prefHeight="25.0">
+                                 <padding>
+                                    <Insets left="30.0" right="30.0" />
+                                 </padding>
+                              </TextField>
+                              <ImageView id="search" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+                              <Button id="clearSearch" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#clearSearchButtonClicked" prefHeight="25.0" prefWidth="25.0">
+                                 <StackPane.margin>
+                                    <Insets left="510.0" />
+                                 </StackPane.margin>
+                              </Button>
+                           </children>
+                        </StackPane>
                      </children>
                      <VBox.margin>
                         <Insets right="10.0" top="10.0" />

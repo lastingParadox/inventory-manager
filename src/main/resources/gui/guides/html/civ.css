@@ -1,17 +1,18 @@
 @font-face {
     font-family: "Penumbra";
-    src: url("/fonts/Penumbra-HalfSerif-Std.ttf");
+    src: url("Penumbra-HalfSerif-Std.ttf");
 }
 
 @font-face {
     font-family: "NotoSans";
-    src: url("/fonts/NotoSans-Regular.ttf");
+    src: url("NotoSans-Regular.ttf");
 }
 
 body {
-    background-image: url("/images/background.jpg");
-    font-family: "Penumbra";
+    background-image: url("background.jpg");
+    font-family: "Penumbra", serif;
     color: #332F27;
+    margin-right: 20px;
 }
 
 h1 {
@@ -19,12 +20,12 @@ h1 {
 }
 
 p {
-    font-family: "NotoSans";
+    font-family: "NotoSans", sans-serif;
 }
 
 a {
     color: #332F27;
-    font-family: "NotoSans";
+    font-family: "NotoSans", sans-serif;
     text-decoration: none;
 }
 
@@ -43,7 +44,7 @@ hr {
     margin-right: auto;
     width: 750px;
     height: 75px;
-    background-image: url("/images/topHeader.png");
+    background-image: url("topHeader.png");
     background-repeat: no-repeat;
     box-shadow: 0 0 3px 3px #B09F8B inset;
     background-position: center;

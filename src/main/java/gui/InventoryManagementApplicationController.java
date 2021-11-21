@@ -66,7 +66,7 @@ public class InventoryManagementApplicationController {
 
         Stage stage = new Stage();
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/main.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/about.css")).toExternalForm());
         stage.setScene(scene);
         stage.setTitle("About");
         stage.setMinWidth(1000);
@@ -130,6 +130,12 @@ public class InventoryManagementApplicationController {
     @FXML
     void clearSearchButtonClicked() {
         searchField.setText("");
+    }
+
+    @FXML
+    void closeButtonClicked() {
+        Stage stage = (Stage) itemTable.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
