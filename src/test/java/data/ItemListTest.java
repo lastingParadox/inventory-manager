@@ -169,14 +169,14 @@ class ItemListTest {
     }
 
     @Test
-    void sortByValueSerialTest() {
+    void sortBySerialTest() {
         List<Item> testList = new ArrayList<>(Arrays.asList(
                 new Item("Test Item 5", "100", "Z-090-000-000"),
                 new Item("Test Item 1", "50", "K-091-000-000"),
                 new Item("Test Item 2", "75", "A-092-000-000")));
 
         test.setList(testList);
-        Item expected = test.getList().get(0);
+        Item expected = test.getList().get(2);
 
         test.sortBySerial();
         Item actual = test.getList().get(0);
@@ -188,11 +188,11 @@ class ItemListTest {
     void inverseSortBySerialTest() {
         List<Item> testList = new ArrayList<>(Arrays.asList(
                 new Item("Test Item 5", "100", "Z-090-000-000"),
-                new Item("Test Item 1", "50", "K-091-000-000"),
-                new Item("Test Item 2", "75", "A-092-000-000")));
+                new Item("Test Item 2", "75", "A-092-000-000"),
+                new Item("Test Item 1", "50", "K-091-000-000")));
 
         test.setList(testList);
-        Item expected = test.getList().get(1);
+        Item expected = test.getList().get(2);
 
         test.inverseSortBySerial();
         Item actual = test.getList().get(1);
