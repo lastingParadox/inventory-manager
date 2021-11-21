@@ -345,7 +345,7 @@ public class InventoryManagementApplicationController {
         controller.setItem(rowItem);
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/main.css")).toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/edit.css")).toExternalForm());
         stage.setScene(scene);
         stage.setTitle(String.format("Edit %s", controller.getItem().getName()));
         stage.getIcons().add(new Image(APPICON));
