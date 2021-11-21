@@ -21,6 +21,28 @@ class ItemListTest {
     ItemList test = new ItemList();
 
     @Test
+    void hugeItemListTest() {
+        //Hilariously disgusting loop to add 10000 items to the list.
+        String actual = "";
+        try {
+            for(int l = 0; l < 10; l++) {
+                for(int k = 0; k < 10; k++) {
+                    for (int j = 0; j < 10; j++) {
+                        for(int i = 0; i < 10; i++) {
+                            int stupid = i + (j * 10) + (k * 100) + (l * 1000) + 1;
+                            test.addItem(new Item(String.format("Test Item %d", stupid), String.format("%d", stupid), String.format("A-AAA-AA%d-%d%d%d", l, k, j, i)));
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            actual = "error";
+        }
+
+        assertEquals("", actual);
+    }
+
+    @Test
     void addItemTest() {
         List<Item> testList = new ArrayList<>(Arrays.asList(
                 new Item("Test Item 5", "100", "Z-090-000-000"),
@@ -154,7 +176,7 @@ class ItemListTest {
                 new Item("Test Item 2", "75", "A-092-000-000")));
 
         test.setList(testList);
-        Item expected = test.getList().get(2);
+        Item expected = test.getList().get(0);
 
         test.sortBySerial();
         Item actual = test.getList().get(0);
@@ -193,9 +215,7 @@ class ItemListTest {
         expected.add(testList.get(1));
         expected.add(testList.get(2));
 
-        List<Item> actual = filteredList;
-
-        assertEquals(expected, actual);
+        assertEquals(expected, filteredList);
     }
 
 }
