@@ -144,6 +144,7 @@ package "gui" {
         -void initializeSelectedColumn()
         -void initializeValueColumn()
         +void refreshTable()
+        -void startEditScene()
     }
 }
 

@@ -183,21 +183,8 @@ public class InventoryManagementApplicationController {
         if (itemTable.getSelectionModel().getSelectedItem() == null)
             return;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/edit.fxml"));
-        Parent root = loader.load();
 
-        //Setting the controller's item attributes
-        Stage stage = new Stage();
-        EditItemController controller = loader.getController();
-        controller.setItemList(inventory);
-        controller.setInventoryController(this);
-        controller.setItem(itemTable.getSelectionModel().getSelectedItem());
-
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/edit.css")).toExternalForm());
-        stage.setScene(scene);
-        stage.setTitle(String.format("Edit %s", controller.getItem().getName()));
-        stage.getIcons().add(new Image(APPICON));
-        stage.show();
+        startEditScene(itemTable.getSelectionModel().getSelectedItem(), loader);
     }
 
     @FXML
@@ -336,20 +323,8 @@ public class InventoryManagementApplicationController {
 
     private void editItemRowClicked(Item rowItem) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/edit.fxml"));
-        Parent root = loader.load();
 
-        Stage stage = new Stage();
-        EditItemController controller = loader.getController();
-        controller.setItemList(inventory);
-        controller.setInventoryController(this);
-        controller.setItem(rowItem);
-
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/edit.css")).toExternalForm());
-        stage.setScene(scene);
-        stage.setTitle(String.format("Edit %s", controller.getItem().getName()));
-        stage.getIcons().add(new Image(APPICON));
-        stage.show();
+        startEditScene(rowItem, loader);
     }
 
     private void initializeTable() {
@@ -438,6 +413,23 @@ public class InventoryManagementApplicationController {
 
     public void refreshTable() {
         itemTable.refresh();
+    }
+
+    private void startEditScene(Item item, FXMLLoader loader) throws IOException {
+        Parent root = loader.load();
+
+        Stage stage = new Stage();
+        EditItemController controller = loader.getController();
+        controller.setItemList(inventory);
+        controller.setInventoryController(this);
+        controller.setItem(item);
+
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("css/main.css")).toExternalForm());
+        stage.setScene(scene);
+        stage.setTitle(String.format("Edit %s", controller.getItem().getName()));
+        stage.getIcons().add(new Image(APPICON));
+        stage.show();
     }
 
 }
