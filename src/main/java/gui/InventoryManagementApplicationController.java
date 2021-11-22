@@ -110,7 +110,8 @@ public class InventoryManagementApplicationController {
         nameField.setText("");
         valueField.setText("");
         serialField.setText("");
-        refreshTable();
+
+        itemTable.setItems(inventory.getObservableList());
     }
 
     @FXML
@@ -127,7 +128,7 @@ public class InventoryManagementApplicationController {
             if (type == yes)
                 inventory.clear();
         });
-        refreshTable();
+        itemTable.setItems(inventory.getObservableList());
     }
 
     @FXML
@@ -174,7 +175,7 @@ public class InventoryManagementApplicationController {
             if (type == yes)
                 inventory.removeItems(removedItems);
         });
-        refreshTable();
+        itemTable.setItems(inventory.getObservableList());
     }
 
     @FXML
@@ -276,7 +277,7 @@ public class InventoryManagementApplicationController {
         else
             inventory.inverseSortByName();
         sortNameCheck++;
-        refreshTable();
+        itemTable.setItems(inventory.getObservableList());
     }
 
     @FXML
@@ -287,7 +288,7 @@ public class InventoryManagementApplicationController {
         else
             inventory.inverseSortBySerial();
         sortSerialCheck++;
-        refreshTable();
+        itemTable.setItems(inventory.getObservableList());
     }
 
     @FXML
@@ -298,7 +299,7 @@ public class InventoryManagementApplicationController {
         else
             inventory.inverseSortByValue();
         sortValueCheck++;
-        refreshTable();
+        itemTable.setItems(inventory.getObservableList());
     }
 
     @FXML
