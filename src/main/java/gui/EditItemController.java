@@ -82,6 +82,7 @@ public class EditItemController {
         item.setValue(valueField.getText());
         item.setSerial(serialField.getText());
 
+        inventoryController.getTable().setItems(inventory.getObservableList());
         inventoryController.refreshTable();
 
         Stage stage = (Stage) titleLabel.getScene().getWindow();

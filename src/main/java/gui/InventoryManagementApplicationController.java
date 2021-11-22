@@ -331,6 +331,10 @@ public class InventoryManagementApplicationController {
         startEditScene(rowItem, loader);
     }
 
+    public TableView<Item> getTable() {
+        return itemTable;
+    }
+
     private void initializeTable() {
         //Initializes the table when the scene is initialized.
         itemTable.setItems(inventory.getObservableList());
