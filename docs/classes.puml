@@ -174,8 +174,10 @@ package "helper" {
 
 InventoryManagementApplication -- InventoryManagementApplicationController : < Initializes Main Stage
 InventoryManagementApplicationController -- EditItemController : < Initializes Edit Item Stage
+InventoryManagementApplicationController -- AboutController : < Initializes About Stage
 InventoryManagementApplicationController o-- ItemList
 InventoryManagementApplicationController o-- Validator
+InventoryManagementApplicationController o-- FileHandler
 EditItemController o-- Validator
 EditItemController o-- Item
 AboutController *-- Guide
