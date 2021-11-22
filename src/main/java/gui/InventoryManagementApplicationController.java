@@ -175,7 +175,7 @@ public class InventoryManagementApplicationController {
             if (type == yes)
                 inventory.removeItems(removedItems);
         });
-        itemTable.setItems(inventory.getObservableList());
+        refreshTable();
     }
 
     @FXML
